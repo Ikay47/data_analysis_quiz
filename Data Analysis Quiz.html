@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        [hidden] {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Persistent Header -->
+    <header class="rounded-lg text-white" style="background-color: #0C7969;"
+>
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- Logo Placeholder - Replace src with your actual logo -->
+                <img src="https://uploads.onecompiler.io/43p2xefmu/43p2xdwzd/ITECH%20(3)%20(2)%20(2).png" alt="KITECH" class="h-20 w-20 rounded-lg">
+                <h1 class="text-4xl font-bold">Data Analysis Quiz</h1>
+            </div>
+            <div class="flex space-x-4">
+                <!-- Dataset Dropdown -->
+                <div class="dropdown relative">
+                    <button class="bg-[#A10F2C] hover:bg-[#6F081C] text-white px-4 py-2 rounded-md flex items-center">
+                        <i class="fas fa-database mr-2"></i> Datasets
+                        <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-10">
+                        <div class="p-2 border-b border-gray-200">
+                            <h3 class="text-blue-900 font-semibold">Practice Datasets</h3>
+                        </div>
+                        <div class="p-2">
+                            <a href="https://www.kaggle.com/c/titanic/data" target="_blank" class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md">
+                                <i class="fas fa-file-csv text-green-500 mr-3"></i>
+                                <div>
+                                    <p class="text-gray-800 font-medium">Titanic Dataset</p>
+                                    <p class="text-xs text-gray-500">train.csv</p>
+                                </div>
+                            </a>
+                            <a href="https://www.kaggle.com/datasets/uciml/iris" target="_blank" class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md">
+                                <i class="fas fa-file-csv text-green-500 mr-3"></i>
+                                <div>
+                                    <p class="text-gray-800 font-medium">Iris Dataset</p>
+                                    <p class="text-xs text-gray-500">Iris.csv</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tools Dropdown -->
+                <div class="dropdown relative">
+                    <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md flex items-center">
+                        <i class="fas fa-tools mr-2"></i> Tools
+                        <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-10">
+                        <div class="p-2 border-b border-gray-200">
+                            <h3 class="text-blue-900 font-semibold">Online Tools</h3>
+                        </div>
+                        <div class="p-2">
+                            <a href="https://docs.google.com/spreadsheets/" target="_blank" class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md">
+                                <i class="fab fa-google text-red-500 mr-3"></i>
+                                <p class="text-gray-800 font-medium">Google Sheets</p>
+                            </a>
+                            <a href="https://colab.research.google.com/" target="_blank" class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md">
+                                <i class="fab fa-google-drive text-yellow-500 mr-3"></i>
+                                <p class="text-gray-800 font-medium">Google Colab</p>
+                            </a>
+                            <a href="https://sqliteonline.com/" target="_blank" class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md">
+                                <i class="fas fa-database text-blue-500 mr-3"></i>
+                                <p class="text-gray-800 font-medium">SQLite Online</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 max-w-4xl mt-4">
+        <!-- Quiz Setup Screen -->
+        <div id="quizSetup">
+            <h2 class="text-2xl font-bold text-center mb-6 text-blue-900">Set Up Your Quiz</h2>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Question Sets:</label>
+                    <select id="questionSets" multiple class="w-full p-3 border rounded-lg">
+                        <option value="excel">Excel</option>
+                        <option value="sql">SQL</option>
+                        <option value="statistics">Statistics</option>
+                        <option value="powerbi">Power BI</option>
+                        <option value="python">Python Basics</option>
+                        <option value="python_data">Python Data Analysis</option>
+                        <option value="machine_learning">Machine Learning</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Number of Questions (10-150):</label>
+                        <input type="number" id="numQuestions" min="10" max="150" value="10" class="w-full p-3 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Timer (5 min - 120 min):</label>
+                        <div class="flex items-center">
+                            <input type="number" id="timerMinutes" min="5" max="120" value="5" class="w-full p-3 border rounded-lg">
+                            <span class="ml-2 text-gray-500">minutes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button id="startQuiz" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium">
+                        <i class="fas fa-play mr-2"></i> Start Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizContainer" hidden>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                <div class="flex justify-between items-center mb-6">
+                    <button id="homeButton" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-home mr-1"></i> Home
+                    </button>
+                    <div id="timer" class="text-lg font-medium bg-blue-900 text-white px-4 py-2 rounded-lg">
+                        <i class="far fa-clock mr-2"></i>Time: <span id="timeDisplay">00:00</span>
+                    </div>
+                    <button id="endButton" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-stop mr-1"></i> End Quiz
+                    </button>
+                </div>
+                
+                <div id="questions" class="mb-6 p-4 bg-gray-50 rounded-lg"></div>
+                
+                <div class="flex justify-between items-center mt-6">
+                    <button id="prevQuestion" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-2 rounded-lg">
+                        <i class="fas fa-chevron-left mr-1"></i> Previous
+                    </button>
+                    <div id="questionCounter" class="text-gray-700 font-medium"></div>
+                    <button id="nextQuestion" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg">
+                        Next <i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results" hidden>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-center mb-6 text-blue-900">Quiz Results</h2>
+                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                    <p id="score" class="text-lg text-center"></p>
+                    <p id="feedback" class="text-xl text-center font-bold mt-2"></p>
+                    <p id="timeTaken" class="text-gray-600 mt-2 text-center"></p>
+                </div>
+                <div id="answers" class="mb-6"></div>
+                <div class="flex justify-center">
+                    <button id="homeButton2" class="bg-blue-900 hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-medium">
+                        <i class="fas fa-home mr-2"></i> Return Home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question bank
+        const questionsData = {
+            excel: [
+    // Introduction to Data Analysis (15 Questions)
+    { "id": 1, "question": "What is the primary objective of data analysis?", "options": ["To create complex formulas", "To store data in spreadsheets", "To derive actionable insights from data", "To design visual charts", "To automate data entry"], "answer": "To derive actionable insights from data" },
+    { "id": 2, "question": "Which of the following is an example of qualitative data?", "options": ["Sales revenue", "Customer satisfaction ratings (e.g., 'Good,' 'Poor')", "Number of employees", "Product prices", "Website traffic counts"], "answer": "Customer satisfaction ratings (e.g., 'Good,' 'Poor')" },
+    { "id": 3, "question": "What is the difference between discrete and continuous data?", "options": ["Discrete data is categorical, while continuous data is numerical", "Discrete data is counted in whole numbers, while continuous data can take any value", "Discrete data is always qualitative, while continuous data is quantitative", "Discrete data is time-based, while continuous data is static", "Discrete data is visualized, while continuous data is not"], "answer": "Discrete data is counted in whole numbers, while continuous data can take any value" },
+    { "id": 4, "question": "What does data cleaning involve?", "options": ["Creating new datasets", "Removing or correcting errors in data", "Visualizing data trends", "Adding more data points", "Encrypting data for security"], "answer": "Removing or correcting errors in data" },
+    { "id": 5, "question": "Which measure of central tendency is least affected by extreme values?", "options": ["Mean", "Median", "Mode", "Midrange", "Average"], "answer": "Median" },
+    { "id": 6, "question": "What is the purpose of descriptive statistics?", "options": ["To predict future trends", "To summarize and describe data", "To test hypotheses", "To create machine learning models", "To automate data collection"], "answer": "To summarize and describe data" },
+    { "id": 7, "question": "In data analysis, what is an outlier?", "options": ["A missing data point", "A data point that is significantly different from others", "A duplicate record", "A calculated average", "A categorical variable"], "answer": "A data point that is significantly different from others" },
+    { "id": 8, "question": "What is a common method to handle missing data in a dataset?", "options": ["Delete the entire dataset", "Replace missing values with the mean or median", "Ignore missing values", "Add random values", "Duplicate existing values"], "answer": "Replace missing values with the mean or median" },
+    { "id": 9, "question": "Which of the following is a common data analysis tool?", "options": ["Microsoft Word", "Excel", "Photoshop", "Notepad", "PowerPoint"], "answer": "Excel" },
+    { "id": 10, "question": "What is the purpose of data normalization?", "options": ["To increase data size", "To scale data to a standard range", "To remove all outliers", "To convert data to text format", "To encrypt data"], "answer": "To scale data to a standard range" },
+    { "id": 11, "question": "What does a high standard deviation indicate about a dataset?", "options": ["Data points are closely clustered", "Data points are widely spread out", "Data points are all identical", "Data points are missing", "Data points are categorical"], "answer": "Data points are widely spread out" },
+    { "id": 12, "question": "Which of the following is a goal of exploratory data analysis (EDA)?", "options": ["To build predictive models", "To understand data patterns and relationships", "To automate data entry", "To create final reports", "To delete unnecessary data"], "answer": "To understand data patterns and relationships" },
+    { "id": 13, "question": "What is the purpose of a frequency distribution?", "options": ["To show relationships between variables", "To summarize how often values occur", "To predict future data points", "To normalize data", "To remove outliers"], "answer": "To summarize how often values occur" },
+    { "id": 14, "question": "Which statistical measure describes the spread of data?", "options": ["Mean", "Median", "Variance", "Mode", "Midpoint"], "answer": "Variance" },
+    { "id": 15, "question": "What is the first step in a typical data analysis process?", "options": ["Visualize the data", "Collect and prepare the data", "Build a predictive model", "Share the results", "Remove all outliers"], "answer": "Collect and prepare the data" },
+
+    // Excel Basics (15 Questions)
+    { "id": 16, "question": "What is the default file extension for an Excel workbook in Excel 2016 or later?", "options": [".xls", ".xlsx", ".csv", ".xlsm", ".txt"], "answer": ".xlsx" },
+    { "id": 17, "question": "How do you select an entire column in Excel?", "options": ["Click the column letter at the top", "Press Ctrl+Shift", "Right-click the worksheet tab", "Press Ctrl+A", "Click the row number"], "answer": "Click the column letter at the top" },
+    { "id": 18, "question": "What is the maximum number of rows in an Excel worksheet (Excel 2016 or later)?", "options": ["65,536", "1,048,576", "524,288", "2,097,152", "16,384"], "answer": "1,048,576" },
+    { "id": 19, "question": "How do you freeze the top row in Excel?", "options": ["Home > Freeze Panes", "View > Freeze Panes > Freeze Top Row", "Data > Freeze Rows", "Insert > Freeze Top", "Format > Lock Row"], "answer": "View > Freeze Panes > Freeze Top Row" },
+    { "id": 20, "question": "What does the AutoSum button in Excel do?", "options": ["Counts the number of cells", "Calculates the average of selected cells", "Inserts a SUM formula for selected cells", "Formats cells as currency", "Creates a chart"], "answer": "Inserts a SUM formula for selected cells" },
+    { "id": 21, "question": "How do you insert a new worksheet in Excel?", "options": ["Home > Insert > Worksheet", "Click the plus sign next to the sheet tabs", "Data > New Sheet", "Insert > Table", "View > Add Sheet"], "answer": "Click the plus sign next to the sheet tabs" },
+    { "id": 22, "question": "What is the shortcut to save an Excel workbook?", "options": ["Ctrl+S", "Ctrl+P", "Ctrl+C", "Ctrl+X", "Ctrl+Z"], "answer": "Ctrl+S" },
+    { "id": 23, "question": "What does the 'Format Painter' tool do in Excel?", "options": ["Changes cell colors", "Copies formatting from one cell to another", "Creates a chart", "Inserts a formula", "Deletes cell content"], "answer": "Copies formatting from one cell to another" },
+    { "id": 24, "question": "How do you protect a worksheet in Excel?", "options": ["Home > Protect Sheet", "Review > Protect Sheet", "Data > Lock Worksheet", "Insert > Protect", "View > Security"], "answer": "Review > Protect Sheet" },
+    { "id": 25, "question": "What is the purpose of conditional formatting in Excel?", "options": ["To sort data automatically", "To highlight cells based on specific rules", "To merge cells", "To create pivot tables", "To insert formulas"], "answer": "To highlight cells based on specific rules" },
+    { "id": 26, "question": "How do you merge multiple cells in Excel?", "options": ["Home > Merge & Center", "Data > Combine Cells", "Insert > Merge", "View > Merge Cells", "Format > Join Cells"], "answer": "Home > Merge & Center" },
+    { "id": 27, "question": "What happens when you press Ctrl+Shift+Enter in Excel?", "options": ["Saves the workbook", "Creates an array formula", "Copies the selected cells", "Deletes the selected cells", "Inserts a new row"], "answer": "Creates an array formula" },
+    { "id": 28, "question": "How do you convert a range of cells into a table in Excel?", "options": ["Insert > Table", "Home > Format as Table", "Data > Create Table", "View > Table View", "Format > Table"], "answer": "Home > Format as Table" },
+    { "id": 29, "question": "What is the purpose of the 'Ctrl+Arrow' shortcut in Excel?", "options": ["Selects the entire worksheet", "Moves to the edge of the current data region", "Inserts a new row", "Copies the selected cell", "Deletes the selected cell"], "answer": "Moves to the edge of the current data region" },
+    { "id": 30, "question": "How do you hide a column in Excel?", "options": ["Right-click the column letter > Hide", "Home > Hide Column", "Data > Hide", "View > Hide Column", "Format > Remove Column"], "answer": "Right-click the column letter > Hide" },
+
+    // Excel Formulas and Functions (20 Questions)
+    { "id": 31, "question": "Which function calculates the average of a range of cells?", "options": ["SUM", "AVERAGE", "COUNT", "MAX", "MIN"], "answer": "AVERAGE" },
+    { "id": 32, "question": "What does the IF function do in Excel?", "options": ["Counts cells with specific values", "Returns a value based on a logical test", "Sorts data in ascending order", "Creates a chart", "Merges cells"], "answer": "Returns a value based on a logical test" },
+    { "id": 33, "question": "What is the syntax of the VLOOKUP function?", "options": ["=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])", "=VLOOKUP(table_array, lookup_value, row_index_num, [range_lookup])", "=VLOOKUP(lookup_value, col_index_num, table_array, [range_lookup])", "=VLOOKUP(lookup_value, table_array, [range_lookup], col_index_num)", "=VLOOKUP(table_array, lookup_value, col_index_num, [range_lookup])"], "answer": "=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])" },
+    { "id": 34, "question": "Which function counts the number of cells that contain numbers?", "options": ["COUNT", "COUNTA", "COUNTBLANK", "COUNTIF", "SUM"], "answer": "COUNT" },
+    { "id": 35, "question": "What does the CONCATENATE function do?", "options": ["Splits text into multiple cells", "Combines text from multiple cells", "Converts text to uppercase", "Counts text entries", "Formats text as a number"], "answer": "Combines text from multiple cells" },
+    { "id": 36, "question": "Which function rounds a number to a specified number of digits?", "options": ["ROUND", "FLOOR", "CEILING", "TRUNC", "INT"], "answer": "ROUND" },
+    { "id": 37, "question": "What is the purpose of the SUMIF function?", "options": ["Sums all values in a range", "Sums values that meet a specific criterion", "Counts values in a range", "Averages values in a range", "Finds the maximum value"], "answer": "Sums values that meet a specific criterion" },
+    { "id": 38, "question": "Which function returns the current date and time?", "options": ["TODAY", "NOW", "DATE", "TIME", "DAY"], "answer": "NOW" },
+    { "id": 39, "question": "What does the INDEX function return?", "options": ["The position of a value in a range", "The value at a specified position in a range", "The sum of a range", "The average of a range", "The count of values in a range"], "answer": "The value at a specified position in a range" },
+    { "id": 40, "question": "Which function is used to find the largest value in a range?", "options": ["MAX", "MIN", "LARGE", "SMALL", "AVERAGE"], "answer": "MAX" },
+    { "id": 41, "question": "What does the IFERROR function do?", "options": ["Returns an error message", "Returns a value if a formula results in an error", "Checks for blank cells", "Converts errors to text", "Ignores errors in calculations"], "answer": "Returns a value if a formula results in an error" },
+    { "id": 42, "question": "Which function splits text based on a delimiter?", "options": ["LEFT", "RIGHT", "TEXTSPLIT (Excel 365)", "MID", "CONCAT"], "answer": "TEXTSPLIT (Excel 365)" },
+    { "id": 43, "question": "What is the purpose of the COUNTIF function?", "options": ["Counts all cells in a range", "Counts cells that meet a specific criterion", "Sums cells in a range", "Averages cells in a range", "Finds the median of a range"], "answer": "Counts cells that meet a specific criterion" },
+    { "id": 44, "question": "Which function extracts a specific number of characters from the start of a text string?", "options": ["LEFT", "RIGHT", "MID", "LEN", "FIND"], "answer": "LEFT" },
+    { "id": 45, "question": "What does the DATEDIF function calculate?", "options": ["The current date", "The difference between two dates", "The sum of dates", "The average of dates", "The time of day"], "answer": "The difference between two dates" },
+    { "id": 46, "question": "Which operator is used for exponentiation in Excel formulas?", "options": ["*", "/", "^", "+", "-"], "answer": "^" },
+    { "id": 47, "question": "What does the AND function do in Excel?", "options": ["Combines text strings", "Checks if all conditions are true", "Counts cells with text", "Sums values in a range", "Finds the maximum value"], "answer": "Checks if all conditions are true" },
+    { "id": 48, "question": "Which function converts text to a number?", "options": ["TEXT", "VALUE", "NUMBER", "FORMAT", "CONVERT"], "answer": "VALUE" },
+    { "id": 49, "question": "What is the purpose of the MATCH function?", "options": ["Finds the position of a value in a range", "Returns a value from a range", "Sums values in a range", "Counts values in a range", "Merges two ranges"], "answer": "Finds the position of a value in a range" },
+    { "id": 50, "question": "Which function calculates the number of characters in a text string?", "options": ["LEN", "COUNT", "TEXT", "CHAR", "SIZE"], "answer": "LEN" },
+
+    // Pivot Tables (15 Questions)
+    { "id": 51, "question": "What is the primary purpose of a pivot table in Excel?", "options": ["To create charts", "To summarize and analyze data", "To merge worksheets", "To clean data", "To sort data alphabetically"], "answer": "To summarize and analyze data" },
+    { "id": 52, "question": "How do you create a pivot table in Excel?", "options": ["Home > Pivot Table", "Insert > PivotTable", "Data > Create Pivot", "View > Pivot Table", "Format > Summarize"], "answer": "Insert > PivotTable" },
+    { "id": 53, "question": "Which area in a pivot table displays the summarized data?", "options": ["Rows", "Columns", "Values", "Filters", "Slicer"], "answer": "Values" },
+    { "id": 54, "question": "What are valid options for summarizing data in a pivot table (in the Values area)?", "options": ["Sum, Count, Average", "Merge, Split, Combine", "Sort, Filter, Group", "Format, Align, Style", "Insert, Delete, Copy"], "answer": "Sum, Count, Average" },
+    { "id": 55, "question": "How do you add a filter to a pivot table?", "options": ["Drag a field to the Filters area", "Drag a field to the Values area", "Right-click and select Sort", "Use the Format Painter", "Insert a new column"], "answer": "Drag a field to the Filters area" },
+    { "id": 56, "question": "What does the 'Show Values As' option in a pivot table allow you to do?", "options": ["Change the font of the pivot table", "Display data as percentages or differences", "Merge cells in the pivot table", "Remove filters", "Add new data fields"], "answer": "Display data as percentages or differences" },
+    { "id": 57, "question": "How can you refresh a pivot table after updating the source data?", "options": ["Right-click the pivot table > Refresh", "Home > Refresh Data", "Data > Update Pivot", "Insert > Refresh Table", "View > Reload Data"], "answer": "Right-click the pivot table > Refresh" },
+    { "id": 58, "question": "What is a slicer in a pivot table?", "options": ["A tool to format cells", "An interactive filter for pivot tables", "A chart type", "A formula calculator", "A data sorting tool"], "answer": "An interactive filter for pivot tables" },
+    { "id": 59, "question": "Which of the following can be used in the Rows area of a pivot table?", "options": ["Numerical data only", "Categorical or numerical data", "Formulas only", "Text data only", "Dates only"], "answer": "Categorical or numerical data" },
+    { "id": 60, "question": "How do you group dates in a pivot table?", "options": ["Right-click a date field > Group", "Insert > Group Dates", "Data > Group Data", "Home > Date Group", "Format > Date Range"], "answer": "Right-click a date field > Group" },
+    { "id": 61, "question": "What happens if you place a field in the Columns area of a pivot table?", "options": ["It filters the data", "It creates a new worksheet", "It displays data horizontally across columns", "It calculates the average", "It hides the field"], "answer": "It displays data horizontally across columns" },
+    { "id": 62, "question": "Which pivot table feature allows you to collapse or expand data?", "options": ["Slicer", "Filter", "Group", "Show Details", "Expand/Collapse buttons"], "answer": "Expand/Collapse buttons" },
+    { "id": 63, "question": "What is the purpose of a calculated field in a pivot table?", "options": ["To add new data to the source table", "To create a new field based on existing fields", "To filter data", "To sort the pivot table", "To format the pivot table"], "answer": "To create a new field based on existing fields" },
+    { "id": 64, "question": "How do you remove a field from a pivot table?", "options": ["Delete the source data", "Drag the field out of the pivot table areas", "Right-click the pivot table > Delete Field", "Home > Remove Field", "Format > Clear Field"], "answer": "Drag the field out of the pivot table areas" },
+    { "id": 65, "question": "What does the 'Count' summary function in a pivot table do?", "options": ["Sums numerical values", "Counts the number of non-empty cells", "Calculates the average", "Finds the maximum value", "Converts data to percentages"], "answer": "Counts the number of non-empty cells" },
+
+    // VLOOKUP and Lookup Functions (10 Questions)
+    { "id": 66, "question": "What does VLOOKUP stand for?", "options": ["Vertical Lookup", "Variable Lookup", "Value Lookup", "Vector Lookup", "Visual Lookup"], "answer": "Vertical Lookup" },
+    { "id": 67, "question": "What does the [range_lookup] argument in VLOOKUP specify?", "options": ["The column to return", "Whether to perform an exact or approximate match", "The range to sum", "The number of rows to search", "The format of the result"], "answer": "Whether to perform an exact or approximate match" },
+    { "id": 68, "question": "What happens if VLOOKUP cannot find the lookup value?", "options": ["Returns 0", "Returns #N/A", "Returns the closest match", "Returns an empty string", "Returns the last value in the range"], "answer": "Returns #N/A" },
+    { "id": 69, "question": "Which function is an alternative to VLOOKUP for more flexibility?", "options": ["SUMIF", "INDEX/MATCH", "COUNTIF", "CONCATENATE", "IFERROR"], "answer": "INDEX/MATCH" },
+    { "id": 70, "question": "What is a limitation of VLOOKUP?", "options": ["It cannot handle numerical data", "It only searches in the first column of the table array", "It cannot perform exact matches", "It only works with text data", "It cannot return multiple values"], "answer": "It only searches in the first column of the table array" },
+    { "id": 71, "question": "Which function performs a horizontal lookup?", "options": ["VLOOKUP", "HLOOKUP", "XLOOKUP (Excel 365)", "LOOKUP", "MATCH"], "answer": "HLOOKUP" },
+    { "id": 72, "question": "In VLOOKUP, what does the col_index_num argument represent?", "options": ["The row to search", "The column from which to return a value", "The number of matches to find", "The range to filter", "The lookup value position"], "answer": "The column from which to return a value" },
+    { "id": 73, "question": "How do you ensure an exact match in VLOOKUP?", "options": ["Set [range_lookup] to TRUE", "Set [range_lookup] to FALSE", "Omit [range_lookup]", "Use a wildcard", "Sort the table array"], "answer": "Set [range_lookup] to FALSE" },
+    { "id": 74, "question": "Which function can replace VLOOKUP in Excel 365 for more advanced lookups?", "options": ["XLOOKUP", "SUMIF", "TEXTSPLIT", "FILTER", "CONCAT"], "answer": "XLOOKUP" },
+    { "id": 75, "question": "What is a common error when using VLOOKUP?", "options": ["Forgetting to lock the table array reference", "Using a negative col_index_num", "Including too many columns", "Using text instead of numbers", "Omitting the lookup value"], "answer": "Forgetting to lock the table array reference" },
+
+    // Visualizations in Excel (15 Questions)
+    { "id": 76, "question": "Which Excel feature is used to create charts?", "options": ["PivotTable", "Insert > Charts", "Data > Visualize", "Home > Graph", "View > Chart"], "answer": "Insert > Charts" },
+    { "id": 77, "question": "Which chart type is best for showing trends over time?", "options": ["Pie chart", "Bar chart", "Line chart", "Scatter chart", "Histogram"], "answer": "Line chart" },
+    { "id": 78, "question": "What is the purpose of a pie chart in Excel?", "options": ["To show relationships between variables", "To display proportions of a whole", "To show trends over time", "To compare numerical values", "To display distributions"], "answer": "To display proportions of a whole" },
+    { "id": 79, "question": "How do you add a title to a chart in Excel?", "options": ["Right-click the chart > Add Title", "Chart Design > Add Chart Element > Chart Title", "Insert > Chart Title", "Home > Title", "Format > Chart Name"], "answer": "Chart Design > Add Chart Element > Chart Title" },
+    { "id": 80, "question": "Which chart type is best for comparing values across categories?", "options": ["Line chart", "Pie chart", "Bar chart", "Scatter chart", "Area chart"], "answer": "Bar chart" },
+    { "id": 81, "question": "What does a scatter chart display?", "options": ["Proportions of a whole", "Relationships between two numerical variables", "Trends over time", "Frequency distributions", "Categorical counts"], "answer": "Relationships between two numerical variables" },
+    { "id": 82, "question": "How do you change the chart type in Excel?", "options": ["Right-click the chart > Change Chart Type", "Home > Chart Type", "Insert > Switch Chart", "Data > Modify Chart", "View > Chart Style"], "answer": "Right-click the chart > Change Chart Type" },
+    { "id": 83, "question": "What is the purpose of data labels in a chart?", "options": ["To format the chart background", "To display exact values on the chart", "To filter the chart data", "To sort the chart data", "To merge chart elements"], "answer": "To display exact values on the chart" },
+    { "id": 84, "question": "Which chart type is best for showing the distribution of numerical data?", "options": ["Pie chart", "Bar chart", "Histogram", "Line chart", "Scatter chart"], "answer": "Histogram" },
+    { "id": 85, "question": "How do you add a trendline to a scatter chart?", "options": ["Right-click the data series > Add Trendline", "Insert > Trendline", "Home > Add Line", "Data > Trend Analysis", "Format > Trendline"], "answer": "Right-click the data series > Add Trendline" },
+    { "id": 86, "question": "What does a clustered column chart display?", "options": ["Trends over time", " Hawkins", "Proportions of a whole", "Relationships between variables", "Frequency distributions"], "answer": "Multiple data series side by side" },
+    { "id": 87, "question": "How do you resize a chart in Excel?", "options": ["Drag the chart’s edges", "Home > Resize Chart", "Insert > Chart Size", "Format > Chart Dimensions", "View > Adjust Size"], "answer": "Drag the chart’s edges" },
+    { "id": 88, "question": "What is the purpose of a chart legend?", "options": ["To display the chart title", "To identify data series in the chart", "To filter chart data", "To sort chart data", "To format the chart"], "answer": "To identify data series in the chart" },
+    { "id": 89, "question": "Which feature allows you to highlight specific data points in a chart?", "options": ["Data Labels", "Filters", "Slicers", "Conditional Formatting", "Trendlines"], "answer": "Data Labels" },
+    { "id": 90, "question": "How do you move a chart to a new worksheet?", "options": ["Right-click the chart > Move to New Sheet", "Home > Move Chart", "Insert > New Chart Sheet", "Data > Chart Sheet", "View > Relocate Chart"], "answer": "Right-click the chart > Move to New Sheet" },
+
+    // Data Analysis with Titanic Dataset (15 Questions)
+    { "id": 91, "question": "Using the Titanic dataset, what is the average `Age` of passengers (rounded to two decimal places)?", "options": ["25.50", "29.70", "32.15", "35.20", "28.00"], "answer": "29.70" },
+    { "id": 92, "question": "How many passengers in the Titanic dataset survived (Survived = 1)?", "options": ["200", "342", "500", "600", "800"], "answer": "342" },
+    { "id": 93, "question": "What is the median `Fare` paid by passengers in the Titanic dataset?", "options": ["10.50", "14.45", "20.00", "25.75", "30.00"], "answer": "14.45" },
+    { "id": 94, "question": "In the Titanic dataset, how many passengers have a missing `Age` value?", "options": ["50", "100", "177", "200", "250"], "answer": "177" },
+    { "id": 95, "question": "Using a pivot table, what is the survival rate (percentage) for female passengers?", "options": ["50%", "68%", "74%", "80%", "90%"], "answer": "74%" },
+    { "id": 96, "question": "What is the most common `Embarked` port in the Titanic dataset?", "options": ["C (Cherbourg)", "Q (Queenstown)", "S (Southampton)", "Unknown", "None"], "answer": "S (Southampton)" },
+    { "id": 97, "question": "Using a VLOOKUP, if you look up passenger ID 1 in the Titanic dataset, what is their `Pclass`?", "options": ["1", "2", "3", "4", "5"], "answer": "3" },
+    { "id": 98, "question": "In a bar chart of `Pclass` counts, which class has the most passengers?", "options": ["1st Class", "2nd Class", "3rd Class", "All equal", "None"], "answer": "3rd Class" },
+    { "id": 99, "question": "What is the standard deviation of `Fare` in the Titanic dataset (rounded to two decimal places)?", "options": ["20.50", "35.75", "49.69", "60.25", "75.00"], "answer": "49.69" },
+    { "id": 100, "question": "In a scatter chart of `Age` vs. `Fare`, what trend is observed?", "options": ["Strong positive correlation", "Strong negative correlation", "No clear correlation", "U-shaped relationship", "Perfect linear relationship"], "answer": "No clear correlation" }
+],
+            sql: [
+    // SQL Basics (15 Questions)
+    { "id": 1, "question": "What does SQL stand for?", "options": ["Structured Query Language", "Standard Query Logic", "Simple Query Language", "Sequential Query Language", "System Query Layer"], "answer": "Structured Query Language" },
+    { "id": 2, "question": "Which SQL statement is used to retrieve data from a database?", "options": ["INSERT", "UPDATE", "SELECT", "DELETE", "ALTER"], "answer": "SELECT" },
+    { "id": 3, "question": "What is the purpose of the WHERE clause in a SQL query?", "options": ["To sort the results", "To filter rows based on a condition", "To group rows by a column", "To join tables", "To create a new table"], "answer": "To filter rows based on a condition" },
+    { "id": 4, "question": "Which SQL clause is used to sort the result set?", "options": ["ORDER BY", "GROUP BY", "HAVING", "WHERE", "JOIN"], "answer": "ORDER BY" },
+    { "id": 5, "question": "What does the asterisk (*) represent in a SELECT statement?", "options": ["Selects all columns from a table", "Selects the first column only", "Selects unique rows", "Selects rows with null values", "Selects the last column only"], "answer": "Selects all columns from a table" },
+    { "id": 6, "question": "Which SQL keyword is used to eliminate duplicate rows in a result set?", "options": ["UNIQUE", "DISTINCT", "LIMIT", "FILTER", "GROUP"], "answer": "DISTINCT" },
+    { "id": 7, "question": "What is the purpose of the INSERT INTO statement?", "options": ["To delete data from a table", "To update existing data", "To add new rows to a table", "To sort data", "To create a new table"], "answer": "To add new rows to a table" },
+    { "id": 8, "question": "Which SQL data type is used to store whole numbers?", "options": ["VARCHAR", "INTEGER", "FLOAT", "CHAR", "TEXT"], "answer": "INTEGER" },
+    { "id": 9, "question": "What does the DROP TABLE statement do?", "options": ["Deletes specific rows from a table", "Deletes the entire table structure", "Updates table data", "Creates a new table", "Renames a table"], "answer": "Deletes the entire table structure" },
+    { "id": 10, "question": "Which SQL clause is used to combine rows from two or more tables?", "options": ["WHERE", "JOIN", "GROUP BY", "ORDER BY", "HAVING"], "answer": "JOIN" },
+    { "id": 11, "question": "What is the default sort order of the ORDER BY clause?", "options": ["Descending", "Ascending", "Random", "Alphabetical only", "Numerical only"], "answer": "Ascending" },
+    { "id": 12, "question": "Which SQL statement is used to modify existing data in a table?", "options": ["INSERT", "UPDATE", "DELETE", "SELECT", "ALTER"], "answer": "UPDATE" },
+    { "id": 13, "question": "What does the PRIMARY KEY constraint ensure?", "options": ["Values are not null and unique", "Values are always numerical", "Values can be duplicated", "Values are sorted", "Values are text only"], "answer": "Values are not null and unique" },
+    { "id": 14, "question": "Which SQL operator is used to combine multiple conditions in a WHERE clause?", "options": ["OR", "LIKE", "IN", "BETWEEN", "EXISTS"], "answer": "OR" },
+    { "id": 15, "question": "What is the purpose of the LIMIT clause in SQL?", "options": ["To filter columns", "To restrict the number of rows returned", "To group rows", "To sort data", "To join tables"], "answer": "To restrict the number of rows returned" },
+
+    // SQL Aggregations and Grouping (15 Questions)
+    { "id": 16, "question": "Which SQL function calculates the total of a column?", "options": ["COUNT", "SUM", "AVG", "MAX", "MIN"], "answer": "SUM" },
+    { "id": 17, "question": "What does the COUNT(*) function return?", "options": ["The sum of all values in a column", "The number of rows in a table or result set", "The average of a column", "The maximum value in a column", "The minimum value in a column"], "answer": "The number of rows in a table or result set" },
+    { "id": 18, "question": "Which clause is used with aggregate functions to group rows?", "options": ["WHERE", "GROUP BY", "ORDER BY", "HAVING", "JOIN"], "answer": "GROUP BY" },
+    { "id": 19, "question": "What is the purpose of the HAVING clause?", "options": ["To filter rows before grouping", "To filter groups after aggregation", "To sort the result set", "To join tables", "To limit the number of rows"], "answer": "To filter groups after aggregation" },
+    { "id": 20, "question": "Which SQL function calculates the average of a column?", "options": ["SUM", "COUNT", "AVG", "MAX", "MIN"], "answer": "AVG" },
+    { "id": 21, "question": "What does the MAX function return?", "options": ["The smallest value in a column", "The largest value in a column", "The total of a column", "The number of rows", "The average of a column"], "answer": "The largest value in a column" },
+    { "id": 22, "question": "Which function counts non-null values in a specific column?", "options": ["COUNT(*)", "COUNT(column_name)", "SUM(column_name)", "AVG(column_name)", "MIN(column_name)"], "answer": "COUNT(column_name)" },
+    { "id": 23, "question": "In a GROUP BY query, which columns can appear in the SELECT clause?", "options": ["Only aggregated columns", "Only non-aggregated columns", "Columns in GROUP BY or aggregated columns", "Any column in the table", "Only primary key columns"], "answer": "Columns in GROUP BY or aggregated columns" },
+    { "id": 24, "question": "What does the following query return: `SELECT AVG(fare) FROM titanic WHERE sex = 'female';`?", "options": ["The total fare for female passengers", "The average fare for female passengers", "The number of female passengers", "The maximum fare for female passengers", "The minimum fare for female passengers"], "answer": "The average fare for female passengers" },
+    { "id": 25, "question": "Which query counts the number of unique values in a column?", "options": ["SELECT COUNT(*) FROM table", "SELECT COUNT(DISTINCT column_name) FROM table", "SELECT UNIQUE(column_name) FROM table", "SELECT SUM(column_column_name) FROM table", "SELECT DISTINCT COUNT(column_name) FROM table"], "answer": "SELECT COUNT(DISTINCT column_name) FROM table" },
+    { "id": 26, "question": "What is the result of `SELECT SUM(salary) FROM employees GROUP BY department;`?", "options": ["Total salary for all employees", "Total salary per department", "Average salary per department", "Number of employees per department", "Maximum salary per department"], "answer": "Total salary per department" },
+    { "id": 27, "question": "Which clause is used to filter rows before aggregation?", "options": ["HAVING", "WHERE", "GROUP BY", "ORDER BY", "LIMIT"], "answer": "WHERE" },
+    { "id": 28, "question": "What does the MIN function return?", "options": ["The smallest value in a column", "The largest value in a column", "The total of a column", "The average of a column", "The number of rows"], "answer": "The smallest value in a column" },
+    { "id": 29, "question": "Which query calculates the total number of rows in a table?", "options": ["SELECT SUM(*) FROM table", "SELECT COUNT(*) FROM table", "SELECT TOTAL(*) FROM table", "SELECT AVG(*) FROM table", "SELECT MAX(*) FROM table"], "answer": "SELECT COUNT(*) FROM table" },
+    { "id": 30, "question": "What is the purpose of the ROUND function in SQL?", "options": ["To truncate a number", "To round a number to a specified decimal place", "To convert text to a number", "To count rows", "To sort values"], "answer": "To round a number to a specified decimal place" },
+
+    // SQL Joins (10 Questions)
+    { "id": 31, "question": "Which type of JOIN returns all rows from both tables, with NULLs where there is no match?", "options": ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN", "CROSS JOIN"], "answer": "FULL OUTER JOIN" },
+    { "id": 32, "question": "What does an INNER JOIN do?", "options": ["Returns all rows from both tables", "Returns only rows with matching values in both tables", "Returns all rows from the left table", "Returns all rows from the right table", "Returns a Cartesian product"], "answer": "Returns only rows with matching values in both tables" },
+    { "id": 33, "question": "Which JOIN type ensures all rows from the left table are included?", "options": ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN", "CROSS JOIN"], "answer": "LEFT JOIN" },
+    { "id": 34, "question": "What is the result of a CROSS JOIN between two tables with 5 and 3 rows, respectively?", "options": ["5 rows", "3 rows", "8 rows", "15 rows", "0 rows"], "answer": "15 rows" },
+    { "id": 35, "question": "Which clause is used to specify the columns to join tables?", "options": ["WHERE", "ON", "GROUP BY", "HAVING", "ORDER BY"], "answer": "ON" },
+    { "id": 36, "question": "What happens if the ON clause in a JOIN is omitted?", "options": ["The query returns no rows", "The query produces a syntax error", "The query performs a CROSS JOIN", "The query returns all rows", "The query sorts the results"], "answer": "The query produces a syntax error" },
+    { "id": 37, "question": "Which JOIN type is used to include all rows from the right table?", "options": ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN", "CROSS JOIN"], "answer": "RIGHT JOIN" },
+    { "id": 38, "question": "In a LEFT JOIN, what happens to rows in the left table with no match in the right table?", "options": ["They are excluded", "They are included with NULLs for right table columns", "They are duplicated", "They are sorted", "They are deleted"], "answer": "They are included with NULLs for right table columns" },
+    { "id": 39, "question": "Which query joins two tables, `orders` and `customers`, on `customer_id`?", "options": ["SELECT * FROM orders JOIN customers WHERE customer_id", "SELECT * FROM orders JOIN customers ON orders.customer_id = customers.customer_id", "SELECT * FROM orders, customers WHERE customer_id = customer_id", "SELECT * FROM orders JOIN customers USING customer_id", "SELECT * FROM orders AND customers ON customer_id"], "answer": "SELECT * FROM orders JOIN customers ON orders.customer_id = customers.customer_id" },
+    { "id": 40, "question": "What is the purpose of a self-join?", "options": ["To join a table with an external database", "To join a table with itself", "To join multiple tables", "To filter rows", "To group data"], "answer": "To join a table with itself" },
+
+    // Subqueries and Advanced SQL (10 Questions)
+    { "id": 41, "question": "What is a subquery in SQL?", "options": ["A query that creates a new table", "A query nested inside another query", "A query that joins tables", "A query that sorts data", "A query that deletes data"], "answer": "A query nested inside another query" },
+    { "id": 42, "question": "Where can a subquery be used in a SQL statement?", "options": ["Only in the SELECT clause", "Only in the FROM clause", "In SELECT, WHERE, or FROM clauses", "Only in the GROUP BY clause", "Only in the ORDER BY clause"], "answer": "In SELECT, WHERE, or FROM clauses" },
+    { "id": 43, "question": "What does the EXISTS operator do in a subquery?", "options": ["Checks if a subquery returns any rows", "Counts the rows in a subquery", "Sums the values in a subquery", "Filters duplicate rows", "Joins tables"], "answer": "Checks if a subquery returns any rows" },
+    { "id": 44, "question": "Which query uses a subquery to find employees with salaries above the average?", "options": ["SELECT * FROM employees WHERE salary > AVG(salary)", "SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees)", "SELECT * FROM employees GROUP BY salary", "SELECT * FROM employees ORDER BY salary", "SELECT * FROM employees HAVING salary > AVG(salary)"], "answer": "SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees)" },
+    { "id": 45, "question": "What is a correlated subquery?", "options": ["A subquery that runs independently", "A subquery that depends on the outer query", "A subquery that joins tables", "A subquery that groups data", "A subquery that sorts results"], "answer": "A subquery that depends on the outer query" },
+    { "id": 46, "question": "Which clause is used to combine the results of two queries?", "options": ["JOIN", "UNION", "GROUP BY", "HAVING", "WHERE"], "answer": "UNION" },
+    { "id": 47, "question": "What does the CASE statement do in SQL?", "options": ["Filters rows", "Performs conditional logic to return values", "Joins tables", "Groups data", "Sorts results"], "answer": "Performs conditional logic to return values" },
+    { "id": 48, "question": "Which query finds the second-highest salary in a table?", "options": ["SELECT MAX(salary) FROM employees", "SELECT MAX(salary) FROM employees WHERE salary < (SELECT MAX(salary) FROM employees)", "SELECT MIN(salary) FROM employees", "SELECT AVG(salary) FROM employees", "SELECT TOP 2 salary FROM employees"], "answer": "SELECT MAX(salary) FROM employees WHERE salary < (SELECT MAX(salary) FROM employees)" },
+    { "id": 49, "question": "What is the purpose of the COALESCE function?", "options": ["Returns the first non-null value from a list", "Counts null values", "Sums values in a column", "Converts text to numbers", "Joins tables"], "answer": "Returns the first non-null value from a list" },
+    { "id": 50, "question": "Which query retrieves rows where a column value is in a subquery’s result?", "options": ["SELECT * FROM table WHERE column IN (subquery)", "SELECT * FROM table WHERE column = subquery", "SELECT * FROM table WHERE column EXISTS subquery", "SELECT * FROM table WHERE column JOIN subquery", "SELECT * FROM table WHERE column GROUP BY subquery"], "answer": "SELECT * FROM table WHERE column IN (subquery)" },
+
+    // Database Design and Constraints (10 Questions)
+    { "id": 51, "question": "What is the purpose of a FOREIGN KEY constraint?", "options": ["Ensures unique values in a column", "Links a column to a primary key in another table", "Prevents null values", "Sorts data automatically", "Groups data by a column"], "answer": "Links a column to a primary key in another table" },
+    { "id": 52, "question": "What does the NOT NULL constraint ensure?", "options": ["Values are unique", "Values cannot be empty", "Values are numerical", "Values are sorted", "Values are text"], "answer": "Values cannot be empty" },
+    { "id": 53, "question": "Which SQL statement creates a new table?", "options": ["CREATE TABLE", "ALTER TABLE", "DROP TABLE", "INSERT INTO", "UPDATE TABLE"], "answer": "CREATE TABLE" },
+    { "id": 54, "question": "What is normalization in database design?", "options": ["Combining tables into one", "Organizing data to reduce redundancy", "Adding duplicate data", "Deleting unnecessary tables", "Sorting data"], "answer": "Organizing data to reduce redundancy" },
+    { "id": 55, "question": "What is a composite key?", "options": ["A single column primary key", "A primary key made of multiple columns", "A foreign key", "A unique index", "A null key"], "answer": "A primary key made of multiple columns" },
+    { "id": 56, "question": "Which constraint ensures that values in a column are unique?", "options": ["PRIMARY KEY", "FOREIGN KEY", "UNIQUE", "NOT NULL", "CHECK"], "answer": "UNIQUE" },
+    { "id": 57, "question": "What does the ALTER TABLE statement do?", "options": ["Deletes a table", "Modifies a table’s structure", "Inserts data into a table", "Retrieves data from a table", "Joins tables"], "answer": "Modifies a table’s structure" },
+    { "id": 58, "question": "What is the purpose of an index in a database?", "options": ["To store data", "To improve query performance", "To delete data", "To join tables", "To group data"], "answer": "To improve query performance" },
+    { "id": 59, "question": "Which normal form eliminates repeating groups of data?", "options": ["First Normal Form (1NF)", "Second Normal Form (2NF)", "Third Normal Form (3NF)", "Boyce-Codd Normal Form (BCNF)", "Fourth Normal Form (4NF)"], "answer": "First Normal Form (1NF)" },
+    { "id": 60, "question": "What does the CHECK constraint do?", "options": ["Ensures unique values", "Limits the values that can be entered in a column", "Links tables", "Deletes rows", "Sorts data"], "answer": "Limits the values that can be entered in a column" },
+
+    // Data Analysis with Titanic Dataset (10 Questions)
+    { "id": 61, "question": "What is the average `Age` of passengers in the Titanic dataset (rounded to two decimal places)?", "options": ["25.50", "29.70", "32.15", "35.20", "28.00"], "answer": "29.70" },
+    { "id": 62, "question": "How many passengers in the Titanic dataset survived (Survived = 1)?", "options": ["200", "342", "500", "600", "800"], "answer": "342" },
+    { "id": 63, "question": "What is the median `Fare` in the Titanic dataset?", "options": ["10.50", "14.45", "20.00", "25.75", "30.00"], "answer": "14.45" },
+    { "id": 64, "question": "How many passengers have a missing `Age` value in the Titanic dataset?", "options": ["50", "100", "177", "200", "250"], "answer": "177" },
+    { "id": 65, "question": "What is the survival rate for female passengers in the Titanic dataset?", "options": ["50%", "68%", "74%", "80%", "90%"], "answer": "74%" },
+    { "id": 66, " question": "Which `Embarked` port has the most passengers in the Titanic dataset?", "options": ["C (Cherbourg)", "Q (Queenstown)", "S (Southampton)", "Unknown", "None"], "answer": "S (Southampton)" },
+    { "id": 67, "question": "What is the standard deviation of `Fare` in the Titanic dataset (rounded to two decimal places)?", "options": ["20.50", "35.75", "49.69", "60.25", "75.00"], "answer": "49.69" },
+    { "id": 68, "question": "How many passengers in the Titanic dataset are in first class (Pclass = 1)?", "options": ["100", "216", "300", "400", "500"], "answer": "216" },
+    { "id": 69, "question": "Which query finds the maximum `Fare` paid by a surviving passenger?", "options": ["SELECT MAX(fare) FROM titanic WHERE survived = 1", "SELECT MAX(fare) FROM titanic WHERE survived = 0", "SELECT SUM(fare) FROM titanic WHERE survived = 1", "SELECT AVG(fare) FROM titanic WHERE survived = 1", "SELECT COUNT(fare) FROM titanic WHERE survived = 1"], "answer": "SELECT MAX(fare) FROM titanic WHERE survived = 1" },
+    { "id": 70, "question": "What is the average `Age` of passengers grouped by `Pclass` for third-class passengers (Pclass = 3)?", "options": ["20.50", "25.14", "30.25", "35.50", "40.00"], "answer": "25.14" }
+],
+            statistics: [
+    // Measures of Central Tendency (10 Questions)
+    { "id": 1, "question": "What is the primary purpose of measures of central tendency?", "options": ["To describe the spread of data", "To summarize the typical value in a dataset", "To identify outliers", "To calculate probabilities", "To create visualizations"], "answer": "To summarize the typical value in a dataset" },
+    { "id": 2, "question": "Which measure of central tendency is the arithmetic average of a dataset?", "options": ["Median", "Mode", "Mean", "Midrange", "Variance"], "answer": "Mean" },
+    { "id": 3, "question": "What is the median of a dataset?", "options": ["The most frequent value", "The middle value when data is ordered", "The sum of all values divided by the count", "The difference between the maximum and minimum", "The average of squared deviations"], "answer": "The middle value when data is ordered" },
+    { "id": 4, "question": "Which measure is most affected by extreme values in a dataset?", "options": ["Median", "Mode", "Mean", "Midrange", "Percentile"], "answer": "Mean" },
+    { "id": 5, "question": "What is the mode of a dataset?", "options": ["The average of all values", "The middle value", "The most frequent value", "The difference between max and min", "The standard deviation"], "answer": "The most frequent value" },
+    { "id": 6, "question": "In a dataset with an even number of values, how is the median calculated?", "options": ["Take the middle value", "Average the two middle values", "Select the most frequent value", "Sum all values", "Use the maximum value"], "answer": "Average the two middle values" },
+    { "id": 7, "question": "What is the midrange of a dataset?", "options": ["The average of all values", "The average of the minimum and maximum values", "The middle value in ordered data", "The most frequent value", "The difference between Q3 and Q1"], "answer": "The average of the minimum and maximum values" },
+    { "id": 8, "question": "Which measure is best for describing a skewed dataset?", "options": ["Mean", "Median", "Mode", "Midrange", "Variance"], "answer": "Median" },
+    { "id": 9, "question": "In a perfectly symmetric dataset, how do the mean, median, and mode compare?", "options": ["They are all different", "Mean is greater than median", "They are all equal", "Mode is greater than mean", "Median is less than mode"], "answer": "They are all equal" },
+    { "id": 10, "question": "What is the mean of the dataset: 2, 4, 6, 8, 10?", "options": ["4", "5", "6", "7", "8"], "answer": "6" },
+
+    // Measures of Dispersion (10 Questions)
+    { "id": 11, "question": "What does a measure of dispersion describe?", "options": ["The central value of a dataset", "The spread or variability of data", "The frequency of values", "The probability of events", "The correlation between variables"], "answer": "The spread or variability of data" },
+    { "id": 12, "question": "Which measure of dispersion is the difference between the maximum and minimum values?", "options": ["Variance", "Standard deviation", "Range", "Interquartile range", "Mean absolute deviation"], "answer": "Range" },
+    { "id": 13, "question": "What is the variance of a dataset?", "options": ["The square root of the standard deviation", "The average of squared deviations from the mean", "The difference between Q3 and Q1", "The most frequent value", "The sum of all values"], "answer": "The average of squared deviations from the mean" },
+    { "id": 14, "question": "What does the standard deviation measure?", "options": ["The average distance of data points from the mean", "The middle value of a dataset", "The most frequent value", "The total sum of values", "The range of the dataset"], "answer": "The average distance of data points from the mean" },
+    { "id": 15, "question": "What is the interquartile range (IQR)?", "options": ["The difference between the maximum and minimum", "The difference between the third and first quartiles", "The average of all values", "The square of the standard deviation", "The most frequent value"], "answer": "The difference between the third and first quartiles" },
+    { "id": 16, "question": "Which measure of dispersion is least affected by extreme values?", "options": ["Range", "Variance", "Standard deviation", "Interquartile range", "Mean absolute deviation"], "answer": "Interquartile range" },
+    { "id": 17, "question": "What is the range of the dataset: 3, 7, 1, 9, 5?", "options": ["4", "5", "6", "8", "10"], "answer": "8" },
+    { "id": 18, "question": "In a dataset, a high standard deviation indicates:", "options": ["Data points are closely clustered around the mean", "Data points are widely spread out", "Data points are all identical", "Data points are missing", "Data points are categorical"], "answer": "Data points are widely spread out" },
+    { "id": 19, "question": "What is the first quartile (Q1) in a dataset?", "options": ["The middle value", "The value below which 25% of data lies", "The value below which 50% of data lies", "The value below which 75% of data lies", "The most frequent value"], "answer": "The value below which 25% of data lies" },
+    { "id": 20, "question": "What does a box plot display?", "options": ["The frequency of categorical data", "The median, quartiles, and potential outliers", "The relationship between two variables", "The trend of data over time", "The probability distribution"], "answer": "The median, quartiles, and potential outliers" },
+
+    // Probability Basics (10 Questions)
+    { "id": 21, "question": "What is the probability of an impossible event?", "options": ["0", "0.5", "1", "2", "Infinity"], "answer": "0" },
+    { "id": 22, "question": "What is the probability of a certain event?", "options": ["0", "0.25", "0.5", "1", "2"], "answer": "1" },
+    { "id": 23, "question": "If you flip a fair coin, what is the probability of getting heads?", "options": ["0", "0.25", "0.5", "0.75", "1"], "answer": "0.5" },
+    { "id": 24, "question": "What is the formula for the probability of an event A, P(A)?", "options": ["Number of outcomes in A / Total outcomes", "Total outcomes / Number of outcomes in A", "Number of outcomes in A * Total outcomes", "Number of outcomes in A + Total outcomes", "Number of outcomes in A - Total outcomes"], "answer": "Number of outcomes in A / Total outcomes" },
+    { "id": 25, "question": "If two events are mutually exclusive, what is P(A and B)?", "options": ["P(A) + P(B)", "P(A) * P(B)", "0", "1", "P(A) / P(B)"], "answer": "0" },
+    { "id": 26, "question": "What is the probability of rolling a 3 on a six-sided die?", "options": ["1/6", "1/3", "1/2", "2/3", "1"], "answer": "1/6" },
+    { "id": 27, "question": "If two events are independent, what is P(A and B)?", "options": ["P(A) + P(B)", "P(A) * P(B)", "P(A) - P(B)", "P(A) / P(B)", "0"], "answer": "P(A) * P(B)" },
+    { "id": 28, "question": "What does P(A or B) equal for non-mutually exclusive events?", "options": ["P(A) + P(B)", "P(A) * P(B)", " Relationships between variables", "P(A) / P(B)", "P(A) - P(B)"], "answer": "P(A) + P(B) - P(A and B)" },
+    { "id": 29, "question": "What is a sample space in probability?", "options": ["The average of all outcomes", "The set of all possible outcomes", "The most frequent outcome", "The middle outcome", "The range of outcomes"], "answer": "The set of all possible outcomes" },
+    { "id": 30, "question": "If you draw a card from a standard deck, what is the probability of drawing a heart?", "options": ["1/4", "1/13", "1/52", "1/2", "1/3"], "answer": "1/4" },
+
+    // Statistical Distributions (10 Questions)
+    { "id": 31, "question": "What is a characteristic of a normal distribution?", "options": ["It is skewed to the right", "It is symmetric and bell-shaped", "It has multiple peaks", "It is uniform", "It is categorical"], "answer": "It is symmetric and bell-shaped" },
+    { "id": 32, "question": "In a normal distribution, what percentage of data lies within one standard deviation of the mean?", "options": ["50%", "68%", "95%", "99.7%", "100%"], "answer": "68%" },
+    { "id": 33, "question": "What is a skewed distribution?", "options": ["A distribution with equal mean, median, and mode", "A distribution with a non-symmetric shape", "A distribution with uniform probabilities", "A distribution with no outliers", "A distribution with two peaks"], "answer": "A distribution with a non-symmetric shape" },
+    { "id": 34, "question": "What is the shape of a right-skewed distribution?", "options": ["Tail on the left is longer", "Tail on the right is longer", "Symmetric", "Uniform", "Bimodal"], "answer": "Tail on the right is longer" },
+    { "id": 35, "question": "What does the z-score measure?", "options": ["The number of data points in a dataset", "The distance of a value from the mean in standard deviations", "The range of a dataset", "The probability of an event", "The correlation between variables"], "answer": "The distance of a value from the mean in standard deviations" },
+    { "id": 36, "question": "What is the formula for a z-score?", "options": ["(x - mean) / standard deviation", "(x + mean) / standard deviation", "(x - median) / range", "(x * mean) / standard deviation", "(x - mean) * standard deviation"], "answer": "(x - mean) / standard deviation" },
+    { "id": 37, "question": "In a normal distribution, what percentage of data lies within two standard deviations of the mean?", "options": ["50%", "68%", "95%", "99.7%", "100%"], "answer": "95%" },
+    { "id": 38, "question": "What is a uniform distribution?", "options": ["All outcomes have equal probability", "Outcomes are skewed to one side", "Outcomes form a bell shape", "Outcomes have multiple peaks", "Outcomes are categorical"], "answer": "All outcomes have equal probability" },
+    { "id": 39, "question": "What is a characteristic of a binomial distribution?", "options": ["It describes continuous data", "It models the number of successes in fixed trials", "It is always symmetric", "It has a single peak", "It describes categorical data only"], "answer": "It models the number of successes in fixed trials" },
+    { "id": 40, "question": "What does a histogram represent?", "options": ["The relationship between two variables", "The frequency distribution of a numerical variable", "The proportion of categorical data", "The trend over time", "The probability of events"], "answer": "The frequency distribution of a numerical variable" },
+
+    // Correlation and Relationships (10 Questions)
+    { "id": 41, "question": "What does the correlation coefficient measure?", "options": ["The central tendency of data", "The strength and direction of a linear relationship", "The spread of data", "The probability of events", "The range of data"], "answer": "The strength and direction of a linear relationship" },
+    { "id": 42, "question": "What is the range of the Pearson correlation coefficient?", "options": ["0 to 1", "-1 to 1", "-∞ to ∞", "0 to 100", "-10 to 10"], "answer": "-1 to 1" },
+    { "id": 43, "question": "What does a correlation coefficient of 0 indicate?", "options": ["A strong positive relationship", "A strong negative relationship", "No linear relationship", "A perfect relationship", "A categorical relationship"], "answer": "No linear relationship" },
+    { "id": 44, "question": "If the correlation coefficient is -0.8, what does this indicate?", "options": ["A weak positive relationship", "A strong negative relationship", "No relationship", "A perfect positive relationship", "A uniform distribution"], "answer": "A strong negative relationship" },
+    { "id": 45, "question": "Which visualization is best for showing the relationship between two numerical variables?", "options": ["Bar chart", "Pie chart", "Scatter plot", "Histogram", "Box plot"], "answer": "Scatter plot" },
+    { "id": 46, "question": "What does a positive correlation imply?", "options": ["As one variable increases, the other decreases", "As one variable increases, the other increases", "There is no relationship between variables", "One variable causes the other", "Both variables are constant"], "answer": "As one variable increases, the other increases" },
+    { "id": 47, "question": "Which of the following can affect the correlation coefficient?", "options": ["Outliers", "Data type", "Sample size", "All of the above", "None of the above"], "answer": "All of the above" },
+    { "id": 48, "question": "What is a limitation of the correlation coefficient?", "options": ["It measures central tendency", "It only captures linear relationships", "It predicts future values", "It describes categorical data", "It calculates probabilities"], "answer": "It only captures linear relationships" },
+    { "id": 49, "question": "In a scatter plot, what does a tight cluster of points along a line indicate?", "options": ["Weak correlation", "Strong correlation", "No correlation", "Uniform distribution", "Skewed distribution"], "answer": "Strong correlation" },
+    { "id": 50, "question": "If two variables have a correlation of 1, what does this mean?", "options": ["No relationship", "Perfect positive linear relationship", "Perfect negative linear relationship", "Weak relationship", "Non-linear relationship"], "answer": "Perfect positive linear relationship" },
+
+    // Data Analysis with Titanic Dataset (10 Questions)
+    { "id": 51, "question": "What is the mean `Age` of passengers in the Titanic dataset (rounded to two decimal places)?", "options": ["25.50", "29.70", "32.15", "35.20", "28.00"], "answer": "29.70" },
+    { "id": 52, "question": "What is the median `Fare` in the Titanic dataset?", "options": ["10.50", "14.45", "20.00", "25.75", "30.00"], "answer": "14.45" },
+    { "id": 53, "question": "What is the standard deviation of `Fare` in the Titanic dataset (rounded to two decimal places)?", "options": ["20.50", "35.75", "49.69", "60.25", "75.00"], "answer": "49.69" },
+    { "id": 54, "question": "What is the interquartile range (IQR) of the `Age` column in the Titanic dataset?", "options": ["10.50", "14.00", "20.13", "25.00", "30.00"], "answer": "20.13" },
+    { "id": 55, "question": "In a histogram of the `Fare` column, what is the shape of the distribution?", "options": ["Uniform", "Right-skewed", "Left-skewed", "Bimodal", "Symmetric"], "answer": "Right-skewed" },
+    { "id": 56, "question": "What is the mode of the `Pclass` column in the Titanic dataset?", "options": ["1", "2", "3", "4", "None"], "answer": "3" },
+    { "id": 57, "question": "What is the probability of a passenger surviving (Survived = 1) in the Titanic dataset?", "options": ["0.25", "0.38", "0.50", "0.75", "1.00"], "answer": "0.38" },
+    { "id": 58, "question": "In a scatter plot of `Age` vs. `Fare`, what is the approximate correlation?", "options": ["Strong positive", "Strong negative", "Weak or no correlation", "Perfect positive", "Perfect negative"], "answer": "Weak or no correlation" },
+    { "id": 59, "question": "What is the range of the `Fare` column in the Titanic dataset?", "options": ["100.00", "200.00", "300.00", "512.33", "600.00"], "answer": "512.33" },
+    { "id": 60, "question": "What is the percentage of passengers in the Titanic dataset with `Age` less than 25?", "options": ["20%", "30%", "40%", "50%", "60%"], "answer": "30%" }
+],
+            powerbi: [
+    // Power BI Basics (10 Questions)
+    { "id": 1, "question": "What is Power BI primarily used for?", "options": ["Word processing", "Data visualization and business intelligence", "Database management", "Programming", "Web development"], "answer": "Data visualization and business intelligence" },
+    { "id": 2, "question": "Which component of Power BI is used to create interactive reports?", "options": ["Power Query", "Power Pivot", "Power BI Desktop", "Power View", "Power Map"], "answer": "Power BI Desktop" },
+    { "id": 3, "question": "What is the file extension for a Power BI Desktop file?", "options": [".xlsx", ".pbix", ".csv", ".sql", ".txt"], "answer": ".pbix" },
+    { "id": 4, "question": "How do you connect to a data source in Power BI?", "options": ["File > Import Data", "Home > Get Data", "View > Data Source", "Model > Connect", "Insert > Data Link"], "answer": "Home > Get Data" },
+    { "id": 5, "question": "What is Power Query used for in Power BI?", "options": ["Creating charts", "Transforming and cleaning data", "Writing DAX formulas", "Managing relationships", "Publishing reports"], "answer": "Transforming and cleaning data" },
+    { "id": 6, "question": "Which Power BI service allows sharing reports online?", "options": ["Power BI Desktop", "Power BI Service", "Power BI Mobile", "Power Query Editor", "Power Pivot"], "answer": "Power BI Service" },
+    { "id": 7, "question": "What is the purpose of the 'Fields' pane in Power BI?", "options": ["To write DAX formulas", "To manage data sources", "To select data for visualizations", "To format reports", "To publish reports"], "answer": "To select data for visualizations" },
+    { "id": 8, "question": "How do you save a Power BI report?", "options": ["File > Save As", "Home > Save", "File > Export", "View > Save Report", "Insert > Save"], "answer": "File > Save As" },
+    { "id": 9, "question": "What is a workspace in Power BI Service?", "options": ["A tool for writing queries", "A collaborative space for sharing reports and dashboards", "A visualization type", "A data transformation tool", "A data modeling feature"], "answer": "A collaborative space for sharing reports and dashboards" },
+    { "id": 10, "question": "Which Power BI feature allows users to ask questions in natural language?", "options": ["Power Query", "Q&A", "DAX Editor", "Power Pivot", "Report View"], "answer": "Q&A" },
+
+    // Data Loading and Transformation (10 Questions)
+    { "id": 11, "question": "Which tool in Power BI is used to clean and transform data before analysis?", "options": ["Power Pivot", "Power Query Editor", "DAX Editor", "Report View", "Data View"], "answer": "Power Query Editor" },
+    { "id": 12, "question": "How do you remove duplicate rows in Power BI?", "options": ["Home > Remove Duplicates in Power Query Editor", "Model > Delete Rows", "View > Clean Data", "Insert > Remove Duplicates", "Format > Deduplicate"], "answer": "Home > Remove Duplicates in Power Query Editor" },
+    { "id": 13, "question": "What does the 'Merge Queries' feature in Power Query do?", "options": ["Combines two tables based on a common column", "Splits a table into multiple tables", "Removes null values", "Creates a new visualization", "Sorts data"], "answer": "Combines two tables based on a common column" },
+    { "id": 14, "question": "How do you replace missing values in Power Query?", "options": ["Right-click column > Replace Values", "Home > Fill Nulls", "Model > Replace Missing", "View > Clean Data", "Insert > Fill Values"], "answer": "Right-click column > Replace Values" },
+    { "id": 15, "question": "What is the purpose of the 'Group By' feature in Power Query?", "options": ["To sort data", "To aggregate data by a column", "To filter rows", "To create relationships", "To format visuals"], "answer": "To aggregate data by a column" },
+    { "id": 16, "question": "How do you import a CSV file into Power BI?", "options": ["Home > Get Data > Text/CSV", "File > Import > CSV", "View > Load CSV", "Model > Import File", "Insert > CSV Data"], "answer": "Home > Get Data > Text/CSV" },
+    { "id": 17, "question": "What does the 'Append Queries' feature in Power Query do?", "options": ["Combines rows from multiple tables", "Merges columns from multiple tables", "Removes duplicate rows", "Sorts data", "Creates a new table"], "answer": "Combines rows from multiple tables" },
+    { "id": 18, "question": "How do you split a column by delimiter in Power Query?", "options": ["Right-click column > Split Column > By Delimiter", "Home > Split Data", "View > Divide Column", "Model > Split", "Insert > Break Column"], "answer": "Right-click column > Split Column > By Delimiter" },
+    { "id": 19, "question": "What is the purpose of the 'Applied Steps' pane in Power Query?", "options": ["To create visualizations", "To track data transformation steps", "To write DAX formulas", "To manage relationships", "To filter visuals"], "answer": "To track data transformation steps" },
+    { "id": 20, "question": "How do you change the data type of a column in Power Query?", "options": ["Right-click column > Change Type", "Home > Data Type", "View > Format Column", "Model > Type Change", "Insert > Modify Type"], "answer": "Right-click column > Change Type" },
+
+    // Data Modeling and Relationships (10 Questions)
+    { "id": 21, "question": "What is the purpose of the 'Relationships' view in Power BI?", "options": ["To create visualizations", "To manage connections between tables", "To write DAX formulas", "To transform data", "To publish reports"], "answer": "To manage connections between tables" },
+    { "id": 22, "question": "What is a primary key in a Power BI data model?", "options": ["A column with duplicate values", "A column with unique values used to link tables", "A column with aggregated data", "A column with missing values", "A column with text only"], "answer": "A column with unique values used to link tables" },
+    { "id": 23, "question": "Which type of relationship is most common in Power BI?", "options": ["One-to-One", "One-to-Many", "Many-to-Many", "Many-to-One", "None-to-Many"], "answer": "One-to-Many" },
+    { "id": 24, "question": "How do you create a relationship between two tables in Power BI?", "options": ["Drag a column from one table to another in Relationships view", "Home > Create Relationship", "View > Link Tables", "Model > Join Tables", "Insert > Table Link"], "answer": "Drag a column from one table to another in Relationships view" },
+    { "id": 25, "question": "What does cardinality refer to in Power BI relationships?", "options": ["The number of rows in a table", "The type of relationship (e.g., one-to-many)", "The number of columns in a table", "The data type of a column", "The aggregation method"], "answer": "The type of relationship (e.g., one-to-many)" },
+    { "id": 26, "question": "What is the purpose of a 'Filter Direction' in Power BI relationships?", "options": ["To sort data", "To control how filters propagate between tables", "To merge tables", "To clean data", "To create visuals"], "answer": "To control how filters propagate between tables" },
+    { "id": 27, "question": "What does a 'Many-to-Many' relationship require in Power BI?", "options": ["A bridge table", "A single primary key", "A unique column", "A calculated column", "A new visualization"], "answer": "A bridge table" },
+    { "id": 28, "question": "How do you edit a relationship in Power BI?", "options": ["Home > Edit Relationship", "Double-click the relationship line in Relationships view", "View > Modify Links", "Model > Edit Join", "Insert > Change Relationship"], "answer": "Double-click the relationship line in Relationships view" },
+    { "id": 29, "question": "What happens if a relationship is missing between two tables used in a report?", "options": ["The report will not load", "Visuals may show incorrect or aggregated data", "The tables are automatically merged", "The report is deleted", "The data is sorted"], "answer": "Visuals may show incorrect or aggregated data" },
+    { "id": 30, "question": "What is the purpose of the 'Manage Relationships' dialog in Power BI?", "options": ["To create visualizations", "To view and edit table relationships", "To write DAX formulas", "To transform data", "To publish reports"], "answer": "To view and edit table relationships" },
+
+    // DAX (Data Analysis Expressions) (15 Questions)
+    { "id": 31, "question": "What is DAX used for in Power BI?", "options": ["To transform data", "To create calculated columns, measures, and tables", "To design visualizations", "To connect to data sources", "To publish reports"], "answer": "To create calculated columns, measures, and tables" },
+    { "id": 32, "question": "Which DAX function calculates the sum of a column?", "options": ["COUNT", "SUM", "AVERAGE", "MAX", "MIN"], "answer": "SUM" },
+    { "id": 33, "question": "What is the difference between a calculated column and a measure in DAX?", "options": ["Calculated columns are static; measures are dynamic", "Measures are static; calculated columns are dynamic", "Calculated columns are for visuals; measures are for data", "Measures are for text; calculated columns are for numbers", "There is no difference"], "answer": "Calculated columns are static; measures are dynamic" },
+    { "id": 34, "question": "Which DAX function counts the number of rows in a table?", "options": ["COUNT", "COUNTROWS", "SUM", "AVERAGE", "DISTINCTCOUNT"], "answer": "COUNTROWS" },
+    { "id": 35, "question": "What does the DAX function CALCULATE do?", "options": ["Filters data without modifying context", "Modifies filter context for an expression", "Sorts data", "Joins tables", "Creates visualizations"], "answer": "Modifies filter context for an expression" },
+    { "id": 36, "question": "Which DAX function returns the average of a column?", "options": ["SUM", "AVERAGE", "COUNT", "MAX", "MIN"], "answer": "AVERAGE" },
+    { "id": 37, "question": "What is the purpose of the DAX function DISTINCT?", "options": ["Counts all rows", "Returns unique values in a column", "Sums values", "Filters null values", "Sorts data"], "answer": "Returns unique values in a column" },
+    { "id": 38, "question": "Which DAX function is used to create conditional logic?", "options": ["IF", "SUM", "COUNT", "FILTER", "ALL"], "answer": "IF" },
+    { "id": 39, "question": "What does the DAX function RELATED do?", "options": ["Creates a new table", "Retrieves a value from a related table", "Filters data", "Sorts data", "Counts rows"], "answer": "Retrieves a value from a related table" },
+    { "id": 40, "question": "How do you create a new measure in Power BI?", "options": ["Home > New Measure", "Table Tools > New Measure", "View > Create Measure", "Model > Add Measure", "Insert > Measure"], "answer": "Table Tools > New Measure" },
+    { "id": 41, "question": "What is the result of the DAX expression: `Total Sales = SUM(Sales[Amount])`?", "options": ["Counts rows in the Sales table", "Sums the Amount column in the Sales table", "Averages the Amount column", "Finds the maximum Amount", "Filters the Amount column"], "answer": "Sums the Amount column in the Sales table" },
+    { "id": 42, "question": "Which DAX function removes all filters from a table?", "options": ["ALL", "FILTER", "CALCULATE", "SUM", "COUNT"], "answer": "ALL" },
+    { "id": 43, "question": "What does the DAX function DIVIDE do?", "options": ["Multiplies two numbers", "Divides two numbers and handles division by zero", "Sums two numbers", "Counts rows", "Filters data"], "answer": "Divides two numbers and handles division by zero" },
+    { "id": 44, "question": "Which DAX function counts unique values in a column?", "options": ["COUNT", "COUNTROWS", "DISTINCTCOUNT", "SUM", "AVERAGE"], "answer": "DISTINCTCOUNT" },
+    { "id": 45, "question": "What is the purpose of the DAX function CONCATENATEX?", "options": ["Combines text values with a delimiter", "Sums text values", "Counts text values", "Filters text values", "Sorts text values"], "answer": "Combines text values with a delimiter" },
+
+    // Visualizations in Power BI (15 Questions)
+    { "id": 46, "question": "Which Power BI visual is best for showing trends over time?", "options": ["Bar Chart", "Pie Chart", "Line Chart", "Table", "Card"], "answer": "Line Chart" },
+    { "id": 47, "question": "How do you create a new visual in Power BI?", "options": ["Home > Insert Visual", "Click a visual icon in the Visualizations pane", "View > Add Chart", "Model > Create Visual", "Insert > New Visual"], "answer": "Click a visual icon in the Visualizations pane" },
+    { "id": 48, "question": "What is the purpose of a slicer in Power BI?", "options": ["To create charts", "To filter data interactively", "To write DAX formulas", "To transform data", "To publish reports"], "answer": "To filter data interactively" },
+    { "id": 49, "question": "Which visual is best for showing proportions of a whole?", "options": ["Bar Chart", "Line Chart", "Pie Chart", "Scatter Chart", "Table"], "answer": "Pie Chart" },
+    { "id": 50, "question": "How do you add a title to a visual in Power BI?", "options": ["Right-click visual > Add Title", "Format Visual > Title", "Home > Insert Title", "View > Add Title", "Insert > Text Box"], "answer": "Format Visual > Title" },
+    { "id": 51, "question": "Which visual is best for comparing values across categories?", "options": ["Line Chart", "Pie Chart", "Bar Chart", "Scatter Chart", "Card"], "answer": "Bar Chart" },
+    { "id": 52, "question": "What does a scatter chart in Power BI display?", "options": ["Proportions of a whole", "Relationships between two numerical variables", "Trends over time", "Frequency distributions", "Categorical counts"], "answer": "Relationships between two numerical variables" },
+    { "id": 53, "question": "How do you apply a filter to a specific visual in Power BI?", "options": ["Drag a field to the Filters pane > Visual level filters", "Home > Filter Visual", "View > Apply Filter", "Model > Visual Filter", "Insert > Filter"], "answer": "Drag a field to the Filters pane > Visual level filters" },
+    { "id": 54, "question": "What is the purpose of a 'Card' visual in Power BI?", "options": ["To display trends over time", "To show a single value or KPI", "To compare categories", "To show relationships", "To filter data"], "answer": "To show a single value or KPI" },
+    { "id": 55, "question": "How do you create a dashboard in Power BI Service?", "options": ["Pin visuals from a report to a dashboard", "Home > Create Dashboard", "View > New Dashboard", "Model > Build Dashboard", "Insert > Dashboard"], "answer": "Pin visuals from a report to a dashboard" },
+    { "id": 56, "question": "Which visual is best for showing geographic data?", "options": ["Bar Chart", "Pie Chart", "Map", "Line Chart", "Table"], "answer": "Map" },
+    { "id": 57, "question": "How do you change the format of a visual (e.g., colors, fonts)?", "options": ["Home > Format Visual", "Format Visual pane", "View > Style Visual", "Model > Customize Visual", "Insert > Visual Format"], "answer": "Format Visual pane" },
+    { "id": 58, "question": "What does a 'Table' visual display in Power BI?", "options": ["Trends over time", "Detailed rows and columns of data", "Proportions of a whole", "Relationships between variables", "Single values"], "answer": "Detailed rows and columns of data" },
+    { "id": 59, "question": "How do you add a trendline to a scatter chart in Power BI?", "options": ["Right-click visual > Add Trendline", "Format Visual > Analytics > Trend Line", "Home > Insert Trendline", "View > Add Trend", "Insert > Trendline"], "answer": "Format Visual > Analytics > Trend Line" },
+    { "id": 60, "question": "What is the purpose of a 'Drillthrough' feature in Power BI?", "options": ["To filter data", "To create a new visual", "To navigate to a detailed report page based on a selection", "To publish reports", "To transform data"], "answer": "To navigate to a detailed report page based on a selection" },
+
+    // Data Analysis with Titanic Dataset (10 Questions)
+    { "id": 61, "question": "After loading the Titanic dataset, what is the average `Age` of passengers (rounded to two decimal places)?", "options": ["25.50", "29.70", "32.15", "35.20", "28.00"], "answer": "29.70" },
+    { "id": 62, "question": "How many passengers in the Titanic dataset survived (Survived = 1)?", "options": ["200", "342", "500", "600", "800"], "answer": "342" },
+    { "id": 63, "question": "What is the median `Fare` in the Titanic dataset?", "options": ["10.50", "14.45", "20.00", "25.75", "30.00"], "answer": "14.45" },
+    { "id": 64, "question": "How many passengers have a missing `Age` value in the Titanic dataset?", "options": ["50", "100", "177", "200", "250"], "answer": "177" },
+    { "id": 65, "question": "In a bar chart of survival counts by `Sex`, which group has a higher survival count?", "options": ["Male", "Female", "Both equal", "None survived", "Unknown"], "answer": "Female" },
+    { "id": 66, "question": "What is the survival rate for first-class passengers (Pclass = 1) in the Titanic dataset?", "options": ["50%", "63%", "75%", "85%", "95%"], "answer": "63%" },
+    { "id": 67, "question": "In a pie chart of `Embarked` ports, which port has the largest share?", "options": ["C (Cherbourg)", "Q (Queenstown)", "S (Southampton)", "Unknown", "None"], "answer": "S (Southampton)" },
+    { "id": 68, "question": "What is the standard deviation of `Fare` in the Titanic dataset (rounded to two decimal places)?", "options": ["20.50", "35.75", "49.69", "60.25", "75.00"], "answer": "49.69" },
+    { "id": 69, "question": "In a scatter plot of `Age` vs. `Fare`, what is the approximate correlation?", "options": ["Strong positive", "Strong negative", "Weak or no correlation", "Perfect positive", "Perfect negative"], "answer": "Weak or no correlation" },
+    { "id": 70, "question": "How many passengers in the Titanic dataset are in third class (Pclass = 3)?", "options": ["200", "300", "491", "600", "700"], "answer": "491" }
+],
+            python: [
+    // Python Syntax and Basics (15 Questions)
+    { "id": 1, "question": "What is Python primarily known for?", "options": ["Web development only", "General-purpose programming", "Database management", "Hardware programming", "Graphic design"], "answer": "General-purpose programming" },
+    { "id": 2, "question": "Which symbol is used for comments in Python?", "options": ["//", "#", "/* */", "--", "%%"], "answer": "#" },
+    { "id": 3, "question": "What is the output of `print(3 + 5)`?", "options": ["3 + 5", "35", "8", "15", "Error"], "answer": "8" },
+    { "id": 4, "question": "Which of the following is a valid variable name in Python?", "options": ["1variable", "variable_1", "variable-1", "variable 1", "@variable"], "answer": "variable_1" },
+    { "id": 5, "question": "What is the correct way to declare a string in Python?", "options": ["\"Hello\" or 'Hello'", "{Hello}", "<Hello>", "(Hello)", "[Hello]"], "answer": "\"Hello\" or 'Hello'" },
+    { "id": 6, "question": "Which Python keyword is used to define a function?", "options": ["func", "define", "def", "function", "lambda"], "answer": "def" },
+    { "id": 7, "question": "What does the `type()` function return?", "options": ["The value of a variable", "The data type of a variable", "The length of a variable", "The sum of a variable", "The index of a variable"], "answer": "The data type of a variable" },
+    { "id": 8, "question": "Which of the following is a Python data type?", "options": ["Array", "List", "Record", "Table", "Column"], "answer": "List" },
+    { "id": 9, "question": "How do you check the length of a list in Python?", "options": ["len(list)", "length(list)", "size(list)", "count(list)", "list.length()"], "answer": "len(list)" },
+    { "id": 10, "question": "What is the output of `print(\"Hello\" + \"World\")`?", "options": ["Hello World", "HelloWorld", "Hello + World", "Error", "\"Hello\" \"World\""], "answer": "HelloWorld" },
+    { "id": 11, "question": "Which operator checks for equality in Python?", "options": ["=", "==", "!=", "===", "<>"], "answer": "==" },
+    { "id": 12, "question": "What is the purpose of the `pass` statement in Python?", "options": ["To exit a loop", "To skip a loop iteration", "To do nothing (placeholder)", "To return a value", "To raise an error"], "answer": "To do nothing (placeholder)" },
+    { "id": 13, "question": "Which Python keyword is used to exit a loop?", "options": ["break", "continue", "pass", "return", "exit"], "answer": "break" },
+    { "id": 14, "question": "How do you convert a string to an integer in Python?", "options": ["str()", "int()", "float()", "bool()", "convert()"], "answer": "int()" },
+    { "id": 15, "question": "What is the output of `print(10 % 3)`?", "options": ["3", "1", "0", "10", "30"], "answer": "1" },
+
+    // Data Types and Structures (15 Questions)
+    { "id": 16, "question": "Which of the following is a mutable data type in Python?", "options": ["String", "Tuple", "List", "Integer", "Float"], "answer": "List" },
+    { "id": 17, "question": "How do you create a list in Python?", "options": ["{1, 2, 3}", "[1, 2, 3]", "(1, 2, 3)", "<1, 2, 3>", "{1: 2, 3}"], "answer": "[1, 2, 3]" },
+    { "id": 18, "question": "What is the output of `my_list = [1, 2, 3]; print(my_list[1])`?", "options": ["1", "2", "3", "Error", "[1, 2, 3]"], "answer": "2" },
+    { "id": 19, "question": "Which data structure is used to store key-value pairs in Python?", "options": ["List", "Tuple", "Dictionary", "Set", "Array"], "answer": "Dictionary" },
+    { "id": 20, "question": "How do you access the value for key 'name' in a dictionary `d = {'name': 'Alice', 'age': 25}`?", "options": ["d.name", "d['name']", "d(name)", "d.get('name')", "Both b and d"], "answer": "Both b and d" },
+    { "id": 21, "question": "What is a tuple in Python?", "options": ["A mutable ordered sequence", "An immutable ordered sequence", "A mutable unordered collection", "An immutable unordered collection", "A key-value store"], "answer": "An immutable ordered sequence" },
+    { "id": 22, "question": "What does the `set()` function create?", "options": ["A list of unique values", "A collection of unique values with no duplicates", "A key-value dictionary", "A sorted list", "A tuple of values"], "answer": "A collection of unique values with no duplicates" },
+    { "id": 23, "question": "How do you add an element to a list in Python?", "options": ["list.add()", "list.append()", "list.insert()", "Both b and c", "list.push()"], "answer": "Both b and c" },
+    { "id": 24, "question": "What is the output of `my_set = {1, 2, 2, 3}; print(len(my_set))`?", "options": ["4", "3", "2", "1", "Error"], "answer": "3" },
+    { "id": 25, "question": "Which method removes the last element from a list?", "options": ["remove()", "pop()", "delete()", "clear()", "discard()"], "answer": "pop()" },
+    { "id": 26, "question": "What is the output of `my_tuple = (1, 2, 3); my_tuple[0] = 4`?", "options": ["(4, 2, 3)", "(1, 2, 3)", "Error", "[4, 2, 3]", "None"], "answer": "Error" },
+    { "id": 27, "question": "How do you check if a key exists in a dictionary?", "options": ["key in dict", "dict.contains(key)", "dict.has_key(key)", "key.exists(dict)", "dict.check(key)"], "answer": "key in dict" },
+    { "id": 28, "question": "What is the output of `print([1, 2, 3] + [4, 5])`?", "options": ["[1, 2, 3, 4, 5]", "[5, 7]", "[1, 2, 3]", "Error", "[4, 5]"], "answer": "[1, 2, 3, 4, 5]" },
+    { "id": 29, "question": "Which data type is used to store a single character in Python?", "options": ["char", "string", "byte", "int", "float"], "answer": "string" },
+    { "id": 30, "question": "What does the `list()` function do?", "options": ["Creates a dictionary", "Converts an iterable to a list", "Removes duplicates", "Sorts a list", "Creates a tuple"], "answer": "Converts an iterable to a list" },
+
+    // Control Structures and Loops (15 Questions)
+    { "id": 31, "question": "Which Python keyword is used for conditional statements?", "options": ["if", "while", "for", "switch", "case"], "answer": "if" },
+    { "id": 32, "question": "What is the output of `x = 5; if x > 3: print(\"Yes\")`?", "options": ["Yes", "No", "Error", "5", "None"], "answer": "Yes" },
+    { "id": 33, "question": "Which loop is used to iterate over a sequence in Python?", "options": ["while", "for", "do-while", "loop", "iterate"], "answer": "for" },
+    { "id": 34, "question": "What does the `continue` statement do in a loop?", "options": ["Exits the loop", "Skips the current iteration", "Restarts the loop", "Raises an error", "Pauses the loop"], "answer": "Skips the current iteration" },
+    { "id": 35, "question": "What is the output of `for i in range(3): print(i)`?", "options": ["1, 2, 3", "0, 1, 2", "3, 2, 1", "Error", "0, 1, 2, 3"], "answer": "0, 1, 2" },
+    { "id": 36, "question": "Which condition stops a `while` loop?", "options": ["When the condition is True", "When the condition is False", "When the loop reaches 10 iterations", "When an error occurs", "When the loop is empty"], "answer": "When the condition is False" },
+    { "id": 37, "question": "What is the output of `x = 1; while x < 4: print(x); x += 1`?", "options": ["1, 2, 3", "1, 2, 3, 4", "4", "Error", "1"], "answer": "1, 2, 3" },
+    { "id": 38, "question": "How do you write an `if-else` statement in Python?", "options": ["if condition: statement else: statement", "if condition { statement } else { statement }", "if (condition) statement; else statement;", "if condition then statement else statement", "if condition -> statement; else statement"], "answer": "if condition: statement else: statement" },
+    { "id": 39, "question": "What does `range(1, 5)` generate?", "options": ["[1, 2, 3, 4, 5]", "[1, 2, 3, 4]", "[0, 1, 2, 3, 4]", "[1, 2, 3, 4, 5, 6]", "Error"], "answer": "[1, 2, 3, 4]" },
+    { "id": 40, "question": "What is the output of `if 10 > 5 and 5 < 3: print(\"True\")`?", "options": ["True", "False", "Error", "Nothing", "10"], "answer": "Nothing" },
+    { "id": 41, "question": "Which operator is used for \"not equal\" in Python?", "options": ["=", "==", "!=", "<>", "!=="], "answer": "!=" },
+    { "id": 42, "question": "What is the output of `for i in [1, 2, 3]: print(i * 2)`?", "options": ["1, 2, 3", "2, 4, 6", "3, 6, 9", "Error", "1, 4, 9"], "answer": "2, 4, 6" },
+    { "id": 43, "question": "Which statement checks if a value is in a list?", "options": ["value in list", "list.contains(value)", "value.exists(list)", "list.has(value)", "value.includes(list)"], "answer": "value in list" },
+    { "id": 44, "question": "What does `elif` stand for in Python?", "options": ["Else if", "End if", "Else loop", "Exit if", "Extra if"], "answer": "Else if" },
+    { "id": 45, "question": "What is the output of `x = 0; while x < 3: x += 1; print(x)`?", "options": ["0, 1, 2", "1, 2, 3", "0, 1, 2, 3", "Error", "3"], "answer": "1, 2, 3" },
+
+    // Functions and Modules (10 Questions)
+    { "id": 46, "question": "What is the purpose of the `return` statement in a function?", "options": ["To exit a loop", "To return a value from the function", "To skip an iteration", "To raise an error", "To print a value"], "answer": "To return a value from the function" },
+    { "id": 47, "question": "What is the output of `def add(a, b): return a + b; print(add(2, 3))`?", "options": ["2", "3", "5", "Error", "None"], "answer": "5" },
+    { "id": 48, "question": "Which Python module is commonly used for data analysis?", "options": ["math", "pandas", "os", "sys", "random"], "answer": "pandas" },
+    { "id": 49, "question": "How do you import the pandas library with an alias `pd`?", "options": ["import pandas as pd", "import pd from pandas", "import pandas.pd", "from pandas import pd", "import pandas using pd"], "answer": "import pandas as pd" },
+    { "id": 50, "question": "What is the purpose of the `lambda` function in Python?", "options": ["To create a named function", "To create an anonymous function", "To import a module", "To loop over data", "To raise an error"], "answer": "To create an anonymous function" },
+    { "id": 51, "question": "What is the output of `def square(num): return num * num; print(square(4))`?", "options": ["4", "8", "16", "Error", "None"], "answer": "16" },
+    { "id": 52, "question": "Which module is used for numerical computations in Python?", "options": ["pandas", "numpy", "matplotlib", "os", "sys"], "answer": "numpy" },
+    { "id": 53, "question": "How do you define a default parameter in a function?", "options": ["def func(x = 0):", "def func(x: 0):", "def func(x) = 0:", "def func(x default 0):", "def func(x := 0):"], "answer": "def func(x = 0):" },
+    { "id": 54, "question": "What does the `random` module do?", "options": ["Performs data analysis", "Generates random numbers", "Creates visualizations", "Manages files", "Connects to databases"], "answer": "Generates random numbers" },
+    { "id": 55, "question": "What is the output of `import random; print(random.randint(1, 5))`?", "options": ["A random integer between 1 and 5", "A random float between 1 and 5", "5", "Error", "1"], "answer": "A random integer between 1 and 5" },
+
+    // Libraries for Data Analysis (10 Questions)
+    { "id": 56, "question": "Which pandas function reads a CSV file into a DataFrame?", "options": ["pd.read_csv()", "pd.load_csv()", "pd.import_csv()", "pd.csv_read()", "pd.open_csv()"], "answer": "pd.read_csv()" },
+    { "id": 57, "question": "What does the `df.head()` method do in pandas?", "options": ["Displays the last 5 rows of a DataFrame", "Displays the first 5 rows of a DataFrame", "Sorts the DataFrame", "Removes duplicates", "Calculates the mean"], "answer": "Displays the first 5 rows of a DataFrame" },
+    { "id": 58, "question": "Which library is used for creating visualizations in Python?", "options": ["pandas", "numpy", "matplotlib", "random", "os"], "answer": "matplotlib" },
+    { "id": 59, "question": "How do you calculate the mean of a column in a pandas DataFrame?", "options": ["df['column'].mean()", "df['column'].average()", "df['column'].sum()", "df['column'].median()", "df['column'].avg()"], "answer": "df['column'].mean()" },
+    { "id": 60, "question": "What does the `df.groupby()` method do in pandas?", "options": ["Filters rows", "Groups data by a column for aggregation", "Sorts data", "Merges DataFrames", "Removes duplicates"], "answer": "Groups data by a column for aggregation" },
+    { "id": 61, "question": "Which matplotlib function creates a scatter plot?", "options": ["plt.plot()", "plt.scatter()", "plt.bar()", "plt.hist()", "plt.pie()"], "answer": "plt.scatter()" },
+    { "id": 62, "question": "How do you drop missing values in a pandas DataFrame?", "options": ["df.drop()", "df.dropna()", "df.remove_null()", "df.delete_na()", "df.clean()"], "answer": "df.dropna()" },
+    { "id": 63, "question": "What does the `numpy.array()` function do?", "options": ["Creates a DataFrame", "Creates a numerical array", "Creates a visualization", "Reads a CSV file", "Filters data"], "answer": "Creates a numerical array" },
+    { "id": 64, "question": "How do you filter rows in a pandas DataFrame where a column value is greater than 10?", "options": ["df[df['column'] > 10]", "df.filter('column' > 10)", "df.where('column' > 10)", "df.select('column' > 10)", "df.query('column' > 10)"], "answer": "df[df['column'] > 10]" },
+    { "id": 65, "question": "What is the output of `import numpy as np; print(np.mean([1, 2, 3, 4]))`?", "options": ["2.5", "3", "4", "Error", "10"], "answer": "2.5" },
+
+    // Data Analysis with Titanic Dataset (15 Questions)
+    { "id": 66, "question": "What is the average `Age` of passengers in the Titanic dataset (rounded to two decimal places)?", "options": ["25.50", "29.70", "32.15", "35.20", "28.00"], "answer": "29.70" },
+    { "id": 67, "question": "How many passengers in the Titanic dataset survived (Survived = 1)?", "options": ["200", "342", "500", "600", "800"], "answer": "342" },
+    { "id": 68, "question": "What is the median `Fare` in the Titanic dataset?", "options": ["10.50", "14.45", "20.00", "25.75", "30.00"], "answer": "14.45" },
+    { "id": 69, "question": "How many passengers have a missing `Age` value in the Titanic dataset?", "options": ["50", "100", "177", "200", "250"], "answer": "177" },
+    { "id": 70, "question": "What is the most frequent `Embarked` port in the Titanic dataset?", "options": ["C (Cherbourg)", "Q (Queenstown)", "S (Southampton)", "Unknown", "None"], "answer": "S (Southampton)" },
+    { "id": 71, "question": "What is the standard deviation of `Fare` in the Titanic dataset (rounded to two decimal places)?", "options": ["20.50", "35.75", "49.69", "60.25", "75.00"], "answer": "49.69" },
+    { "id": 72, "question": "How many passengers are in first class (Pclass = 1) in the Titanic dataset?", "options": ["100", "216", "300", "400", "500"], "answer": "216" },
+    { "id": 73, "question": "What is the survival rate for female passengers in the Titanic dataset?", "options": ["50%", "68%", "74%", "80%", "90%"], "answer": "74%" },
+    { "id": 74, "question": "In a histogram of `Age` using matplotlib, what is the shape of the distribution?", "options": ["Uniform", "Right-skewed", "Left-skewed", "Bimodal", "Symmetric"], "answer": "Right-skewed" },
+    { "id": 75, "question": "What is the correlation between `Age` and `Fare` in the Titanic dataset?", "options": ["Strong positive", "Strong negative", "Weak or no correlation", "Perfect positive", "Perfect negative"], "answer": "Weak or no correlation" },
+    { "id": 76, "question": "How many unique values are in the `Pclass` column?", "options": ["1", "2", "3", "4", "5"], "answer": "3" },
+    { "id": 77, "question": "What is the maximum `Fare` paid by a surviving passenger (Survived = 1)?", "options": ["100.00", "200.00", "512.33", "600.00", "700.00"], "answer": "512.33" },
+    { "id": 78, "question": "In a bar plot of survival counts by `Sex`, which group has more survivors?", "options": ["Male", "Female", "Both equal", "None survived", "Unknown"], "answer": "Female" },
+    { "id": 79, "question": "What is the interquartile range (IQR) of the `Age` column in the Titanic dataset?", "options": ["10.50", "14.00", "20.13", "25.00", "30.00"], "answer": "20.13" },
+    { "id": 80, "question": "How many passengers have a `Fare` greater than 100 in the Titanic dataset?", "options": ["20", "53", "100", "150", "200"], "answer": "53" }
+],
+            python_data: [
+    // Data Loading and Preparation (20 Questions)
+    { "id": 1, "question": "Which Python library is commonly used for data manipulation and analysis?", "options": ["numpy", "pandas", "matplotlib", "seaborn", "sklearn"], "answer": "pandas" },
+    { "id": 2, "question": "How do you import the pandas library with the alias `pd`?", "options": ["import pandas as pd", "from pandas import pd", "import pd from pandas", "import pandas.pd", "import pandas using pd"], "answer": "import pandas as pd" },
+    { "id": 3, "question": "Which function reads a CSV file into a pandas DataFrame?", "options": ["pd.read_csv()", "pd.load_csv()", "pd.import_csv()", "pd.csv_read()", "pd.open_csv()"], "answer": "pd.read_csv()" },
+    { "id": 4, "question": "What does the `df.head()` method do in pandas?", "options": ["Displays the last 5 rows", "Displays the first 5 rows", "Sorts the DataFrame", "Removes duplicates", "Calculates the mean"], "answer": "Displays the first 5 rows" },
+    { "id": 5, "question": "How do you check the number of rows and columns in a DataFrame?", "options": ["df.size()", "df.shape", "df.len()", "df.count()", "df.dimensions()"], "answer": "df.shape" },
+    { "id": 6, "question": "What does `df.info()` provide?", "options": ["Summary statistics", "Data types and non-null counts", "Unique values", "Correlation matrix", "Missing value counts"], "answer": "Data types and non-null counts" },
+    { "id": 7, "question": "How do you drop missing values from a DataFrame?", "options": ["df.drop()", "df.dropna()", "df.remove_null()", "df.delete_na()", "df.clean()"], "answer": "df.dropna()" },
+    { "id": 8, "question": "What does `df.fillna(0)` do?", "options": ["Removes rows with missing values", "Replaces missing values with 0", "Fills missing values with the mean", "Sorts the DataFrame", "Deletes columns"], "answer": "Replaces missing values with 0" },
+    { "id": 9, "question": "How do you select a single column from a DataFrame?", "options": ["df.column", "df['column']", "df.get_column()", "df.select('column')", "df.column()"], "answer": "df['column']" },
+    { "id": 10, "question": "What is the output of `df['Age'].dtype` for a numeric column?", "options": ["int64", "object", "string", "float64", "Depends on the column"], "answer": "Depends on the column" },
+    { "id": 11, "question": "How do you rename a column in a DataFrame?", "options": ["df.rename(columns={'old': 'new'})", "df.change_column('old', 'new')", "df.rename_column('old', 'new')", "df.update({'old': 'new'})", "df.set_column('old', 'new')"], "answer": "df.rename(columns={'old': 'new'})" },
+    { "id": 12, "question": "What does `df.duplicated().sum()` return?", "options": ["Number of unique rows", "Number of duplicate rows", "Number of missing values", "Number of columns", "Number of non-null values"], "answer": "Number of duplicate rows" },
+    { "id": 13, "question": "How do you drop duplicate rows in a DataFrame?", "options": ["df.drop_duplicates()", "df.remove_duplicates()", "df.delete_duplicates()", "df.unique()", "df.dedup()"], "answer": "df.drop_duplicates()" },
+    { "id": 14, "question": "What does `pd.concat([df1, df2])` do?", "options": ["Merges two DataFrames side by side", "Appends two DataFrames vertically", "Joins two DataFrames on a key", "Filters rows", "Sorts DataFrames"], "answer": "Appends two DataFrames vertically" },
+    { "id": 15, "question": "How do you merge two DataFrames on a common column?", "options": ["pd.merge(df1, df2, on='key')", "pd.join(df1, df2, 'key')", "pd.combine(df1, df2)", "pd.concat(df1, df2, on='key')", "pd.append(df1, df2, 'key')"], "answer": "pd.merge(df1, df2, on='key')" },
+    { "id": 16, "question": "What does `df['column'].astype('int')` do?", "options": ["Converts the column to a string", "Converts the column to an integer", "Converts the column to a float", "Removes the column", "Sorts the column"], "answer": "Converts the column to an integer" },
+    { "id": 17, "question": "How do you load the Titanic dataset (`train.csv`) into a DataFrame?", "options": ["df = pd.read_csv('train.csv')", "df = pd.load_csv('train.csv')", "df = pd.import_csv('train.csv')", "df = pd.csv('train.csv')", "df = pd.open('train.csv')"], "answer": "df = pd.read_csv('train.csv')" },
+    { "id": 18, "question": "What does `df.columns` return?", "options": ["A list of column names", "A list of row indices", "A summary of data types", "A count of rows", "A list of unique values"], "answer": "A list of column names" },
+    { "id": 19, "question": "How do you select rows where a column value is null?", "options": ["df[df['column'].isna()]", "df[df['column'] == None]", "df[df['column'].isnull()]", "Both a and c", "df[df['column'] == '']"], "answer": "Both a and c" },
+    { "id": 20, "question": "What does `df.reset_index()` do?", "options": ["Removes the index", "Resets the index to default integers", "Sorts the index", "Creates a new index column", "Deletes rows"], "answer": "Resets the index to default integers" },
+
+    // Data Exploration and Cleaning (20 Questions)
+    { "id": 21, "question": "What does `df.describe()` return?", "options": ["Data types of columns", "Summary statistics of numerical columns", "Unique values in each column", "Number of missing values", "Correlation matrix"], "answer": "Summary statistics of numerical columns" },
+    { "id": 22, "question": "How do you count unique values in a column?", "options": ["df['column'].nunique()", "df['column'].unique().count()", "df['column'].distinct()", "df['column'].value_counts().sum()", "df['column'].count_unique()"], "answer": "df['column'].nunique()" },
+    { "id": 23, "question": "What does `df['column'].value_counts()` return?", "options": ["Mean of the column", "Frequency of each unique value", "Sum of the column", "Unique values only", "Median of the column"], "answer": "Frequency of each unique value" },
+    { "id": 24, "question": "How do you filter rows where `Age` is greater than 30?", "options": ["df[df['Age'] > 30]", "df.filter('Age' > 30)", "df.where('Age' > 30)", "df.select('Age' > 30)", "df.query('Age > 30')"], "answer": "df[df['Age'] > 30]" },
+    { "id": 25, "question": "What does `df.sort_values('column')` do?", "options": ["Sorts the DataFrame by index", "Sorts the DataFrame by the specified column", "Removes the column", "Groups the DataFrame", "Filters the DataFrame"], "answer": "Sorts the DataFrame by the specified column" },
+    { "id": 26, "question": "How do you replace a specific value in a column?", "options": ["df['column'].replace('old', 'new')", "df['column'].change('old', 'new')", "df['column'].update('old', 'new')", "df['column'].set('old', 'new')", "df['column'].swap('old', 'new')"], "answer": "df['column'].replace('old', 'new')" },
+    { "id": 27, "question": "What does `df.isna().sum()` return?", "options": ["Total number of rows", "Number of missing values per column", "Number of non-null values", "Unique values per column", "Summary statistics"], "answer": "Number of missing values per column" },
+    { "id": 28, "question": "How do you fill missing values with the mean of a column?", "options": ["df['column'].fillna(df['column'].mean())", "df['column'].fill(df['column'].mean())", "df['column'].replace_null(df['column'].mean())", "df['column'].set_null(df['column'].mean())", "df['column'].update(df['column'].mean())"], "answer": "df['column'].fillna(df['column'].mean())" },
+    { "id": 29, "question": "What does `df.drop(columns=['column'])` do?", "options": ["Drops rows with missing values", "Drops the specified column", "Drops duplicate rows", "Drops the index", "Drops unique values"], "answer": "Drops the specified column" },
+    { "id": 30, "question": "How do you check for duplicate rows in a DataFrame?", "options": ["df.duplicated().sum()", "df.duplicates().count()", "df.check_duplicates()", "df.unique_rows()", "df.distinct_rows()"], "answer": "df.duplicated().sum()" },
+    { "id": 31, "question": "What does `df['column'].str.lower()` do?", "options": ["Converts text to uppercase", "Converts text to lowercase", "Removes text", "Splits text", "Counts characters"], "answer": "Converts text to lowercase" },
+    { "id": 32, "question": "How do you select multiple columns from a DataFrame?", "options": ["df[['col1', 'col2']]", "df['col1', 'col2']", "df.select(['col1', 'col2'])", "df.get_columns('col1', 'col2')", "df.columns(['col1', 'col2'])"], "answer": "df[['col1', 'col2']]" },
+    { "id": 33, "question": "What does `df.iloc[0]` return?", "options": ["The first column", "The first row", "The last row", "The index", "The column names"], "answer": "The first row" },
+    { "id": 34, "question": "How do you select rows by index labels?", "options": ["df.loc[]", "df.iloc[]", "df.ix[]", "df.at[]", "df.get[]"], "answer": "df.loc[]" },
+    { "id": 35, "question": "What does `df['column'].apply(lambda x: x * 2)` do?", "options": ["Doubles each value in the column", "Sums the column values", "Filters the column", "Removes duplicates", "Sorts the column"], "answer": "Doubles each value in the column" },
+    { "id": 36, "question": "How do you create a new column based on an existing column?", "options": ["df['new_col'] = df['old_col'] * 2", "df.create('new_col') = df['old_col'] * 2", "df.add_column('new_col', df['old_col'] * 2)", "df.new('new_col') = df['old_col'] * 2", "df.set_column('new_col', df['old_col'] * 2)"], "answer": "df['new_col'] = df['old_col'] * 2" },
+    { "id": 37, "question": "What does `df.query('Age > 30')` do?", "options": ["Sorts the DataFrame by Age", "Filters rows where Age is greater than 30", "Groups the DataFrame by Age", "Drops rows where Age is greater than 30", "Counts rows where Age is greater than 30"], "answer": "Filters rows where Age is greater than 30" },
+    { "id": 38, "question": "How do you split a string column into multiple columns?", "options": ["df['column'].str.split(',', expand=True)", "df['column'].split(',', expand=True)", "df['column'].divide(',', expand=True)", "df['column'].break(',', expand=True)", "df['column'].parse(',', expand=True)"], "answer": "df['column'].str.split(',', expand=True)" },
+    { "id": 39, "question": "What does `df['column'].fillna(df['column'].median())` do?", "options": ["Replaces missing values with the median", "Replaces missing values with the mean", "Removes missing values", "Sorts the column", "Counts missing values"], "answer": "Replaces missing values with the median" },
+    { "id": 40, "question": "How do you check the data types of all columns in a DataFrame?", "options": ["df.dtypes", "df.types()", "df.info_types()", "df.get_dtypes()", "df.column_types()"], "answer": "df.dtypes" },
+
+    // Statistical Analysis with Python (20 Questions)
+    { "id": 41, "question": "Which library is used for numerical computations in Python?", "options": ["pandas", "numpy", "matplotlib", "seaborn", "sklearn"], "answer": "numpy" },
+    { "id": 42, "question": "How do you calculate the mean of a column in a DataFrame?", "options": ["df['column'].mean()", "df['column'].average()", "df['column'].sum()", "df['column'].median()", "df['column'].avg()"], "answer": "df['column'].mean()" },
+    { "id": 43, "question": "What does `df['column'].median()` return?", "options": ["The most frequent value", "The middle value when sorted", "The average of the column", "The sum of the column", "The standard deviation"], "answer": "The middle value when sorted" },
+    { "id": 44, "question": "How do you calculate the standard deviation of a column?", "options": ["df['column'].std()", "df['column'].std_dev()", "df['column'].variance()", "df['column'].sd()", "df['column'].deviation()"], "answer": "df['column'].std()" },
+    { "id": 45, "question": "What does `df['column'].mode()[0]` return?", "options": ["The mean of the column", "The most frequent value", "The median of the column", "The sum of the column", "The first value"], "answer": "The most frequent value" },
+    { "id": 46, "question": "How do you compute the correlation between two columns?", "options": ["df['col1'].corr(df['col2'])", "df['col1'].correlation(df['col2'])", "df['col1'].cov(df['col2'])", "df['col1'].relate(df['col2'])", "df['col1'].pearson(df['col2'])"], "answer": "df['col1'].corr(df['col2'])" },
+    { "id": 47, "question": "What does `np.percentile(df['column'], 25)` return?", "options": ["The 25th percentile of the column", "The 25th value in the column", "25% of the column sum", "The mean of the first 25 rows", "The median of the column"], "answer": "The 25th percentile of the column" },
+    { "id": 48, "question": "How do you group a DataFrame by a column and calculate the mean?", "options": ["df.groupby('column').mean()", "df.group('column').avg()", "df.by('column').mean()", "df.aggregate('column').mean()", "df.sort('column').mean()"], "answer": "df.groupby('column').mean()" },
+    { "id": 49, "question": "What does `df['column'].var()` return?", "options": ["The standard deviation", "The variance", "The mean", "The median", "The range"], "answer": "The variance" },
+    { "id": 50, "question": "How do you calculate the interquartile range (IQR) of a column?", "options": ["df['column'].quantile(0.75) - df['column'].quantile(0.25)", "df['column'].max() - df['column'].min()", "df['column'].std()", "df['column'].mean() - df['column'].median()", "df['column'].quantile(0.5)"], "answer": "df['column'].quantile(0.75) - df['column'].quantile(0.25)" },
+    { "id": 51, "question": "What does `df['column'].skew()` return?", "options": ["The mean of the column", "The skewness of the column", "The kurtosis of the column", "The variance of the column", "The median of the column"], "answer": "The skewness of the column" },
+    { "id": 52, "question": "How do you count non-null values in a column?", "options": ["df['column'].count()", "df['column'].size()", "df['column'].non_null()", "df['column'].notna().sum()", "Both a and d"], "answer": "Both a and d" },
+    { "id": 53, "question": "What does `df.corr()` return?", "options": ["A correlation matrix for numerical columns", "A summary of missing values", "A frequency table", "A sorted DataFrame", "A grouped DataFrame"], "answer": "A correlation matrix for numerical columns" },
+    { "id": 54, "question": "How do you calculate the maximum value in a column?", "options": ["df['column'].max()", "df['column'].maximum()", "df['column'].highest()", "df['column'].top()", "df['column'].peak()"], "answer": "df['column'].max()" },
+    { "id": 55, "question": "What does `df.groupby('column').size()` return?", "options": ["The mean of each group", "The count of rows in each group", "The sum of each group", "The median of each group", "The standard deviation of each group"], "answer": "The count of rows in each group" },
+    { "id": 56, "question": "How do you calculate the minimum value in a column?", "options": ["df['column'].min()", "df['column'].minimum()", "df['column'].lowest()", "df['column'].bottom()", "df['column'].smallest()"], "answer": "df['column'].min()" },
+    { "id": 57, "question": "What does `df['column'].quantile(0.5)` return?", "options": ["The mean", "The median", "The mode", "The 50th percentile", "Both b and d"], "answer": "Both b and d" },
+    { "id": 58, "question": "How do you calculate the range of a column?", "options": ["df['column'].max() - df['column'].min()", "df['column'].range()", "df['column'].max_min()", "df['column'].spread()", "df['column'].diff()"], "answer": "df['column'].max() - df['column'].min()" },
+    { "id": 59, "question": "What does `df['column'].kurt()` return?", "options": ["The skewness of the column", "The kurtosis of the column", "The variance of the column", "The mean of the column", "The standard deviation"], "answer": "The kurtosis of the column" },
+    { "id": 60, "question": "How do you calculate the sum of a column?", "options": ["df['column'].sum()", "df['column'].total()", "df['column'].add()", "df['column'].aggregate()", "df['column'].cumsum()"], "answer": "df['column'].sum()" },
+
+    // Data Visualization with Python (20 Questions)
+    { "id": 61, "question": "Which library is commonly used for plotting in Python?", "options": ["pandas", "numpy", "matplotlib", "seaborn", "Both c and d"], "answer": "Both c and d" },
+    { "id": 62, "question": "How do you create a histogram using matplotlib?", "options": ["plt.hist(df['column'])", "plt.plot(df['column'])", "plt.bar(df['column'])", "plt.scatter(df['column'])", "plt.pie(df['column'])"], "answer": "plt.hist(df['column'])" },
+    { "id": 63, "question": "What does `sns.boxplot(x='column', data=df)` create?", "options": ["A bar chart", "A box plot", "A scatter plot", "A histogram", "A pie chart"], "answer": "A box plot" },
+    { "id": 64, "question": "How do you create a scatter plot using pandas?", "options": ["df.plot.scatter(x='col1', y='col2')", "df.plot(x='col1', y='col2')", "df.scatter(x='col1', y='col2')", "df.plot_scatter(x='col1', y='col2')", "df.create_scatter(x='col1', y='col2')"], "answer": "df.plot.scatter(x='col1', y='col2')" },
+    { "id": 65, "question": "What does `plt.xlabel('Label')` do?", "options": ["Sets the title of the plot", "Sets the x-axis label", "Sets the y-axis label", "Adds a legend", "Changes the plot color"], "answer": "Sets the x-axis label" },
+    { "id": 66, "question": "How do you create a bar plot using seaborn?", "options": ["sns.barplot(x='column', y='count', data=df)", "sns.plot_bar(x='column', y='count', data=df)", "sns.histplot(x='column', y='count', data=df)", "sns.scatterplot(x='column', y='count', data=df)", "sns.pieplot(x='column', y='count', data=df)"], "answer": "sns.barplot(x='column', y='count', data=df)" },
+    { "id": 67, "question": "What does `plt.show()` do?", "options": ["Saves the plot", "Displays the plot", "Clears the plot", "Adds a title", "Changes the plot style"], "answer": "Displays the plot" },
+    { "id": 68, "question": "How do you create a pie chart using matplotlib?", "options": ["plt.pie(df['column'].value_counts())", "plt.plot(df['column'].value_counts())", "plt.bar(df['column'].value_counts())", "plt.hist(df['column'].value_counts())", "plt.scatter(df['column'].value_counts())"], "answer": "plt.pie(df['column'].value_counts())" },
+    { "id": 69, "question": "What does `sns.heatmap(df.corr())` create?", "options": ["A scatter plot", "A correlation heatmap", "A bar plot", "A histogram", "A box plot"], "answer": "A correlation heatmap" },
+    { "id": 70, "question": "How do you add a title to a matplotlib plot?", "options": ["plt.title('Title')", "plt.set_title('Title')", "plt.add_title('Title')", "plt.label('Title')", "plt.caption('Title')"], "answer": "plt.title('Title')" },
+    { "id": 71, "question": "What does `sns.countplot(x='column', data=df)` do?", "options": ["Creates a histogram of numerical data", "Creates a bar plot of category counts", "Creates a scatter plot", "Creates a box plot", "Creates a pie chart"], "answer": "Creates a bar plot of category counts" },
+    { "id": 72, "question": "How do you save a matplotlib plot to a file?", "options": ["plt.save('plot.png')", "plt.savefig('plot.png')", "plt.store('plot.png')", "plt.write('plot.png')", "plt.output('plot.png')"], "answer": "plt.savefig('plot.png')" },
+    { "id": 73, "question": "What does `sns.pairplot(df)` create?", "options": ["A single scatter plot", "A grid of scatter plots for numerical columns", "A bar plot for each column", "A histogram for each column", "A box plot for each column"], "answer": "A grid of scatter plots for numerical columns" },
+    { "id": 74, "question": "How do you set the figure size in matplotlib?", "options": ["plt.figure(figsize=(10, 6))", "plt.set_size(10, 6)", "plt.figsize(10, 6)", "plt.size(10, 6)", "plt.resize(10, 6)"], "answer": "plt.figure(figsize=(10, 6))" },
+    { "id": 75, "question": "What does `sns.histplot(df['column'])` create?", "options": ["A bar plot", "A histogram", "A scatter plot", "A pie chart", "A box plot"], "answer": "A histogram" },
+    { "id": 76, "question": "How do you add a legend to a matplotlib plot?", "options": ["plt.legend()", "plt.add_legend()", "plt.set_legend()", "plt.label_legend()", "plt.create_legend()"], "answer": "plt.legend()" },
+    { "id": 77, "question": "What does `df.plot(kind='line')` create?", "options": ["A scatter plot", "A line plot", "A bar plot", "A histogram", "A pie chart"], "answer": "A line plot" },
+    { "id": 78, "question": "How do you create a box plot using pandas?", "options": ["df.plot.box()", "df.plot(kind='box')", "df.boxplot()", "Both b and c", "df.create_boxplot()"], "answer": "Both b and c" },
+    { "id": 79, "question": "What does `sns.scatterplot(x='col1', y='col2', hue='col3', data=df)` do?", "options": ["Creates a scatter plot with color by col3", "Creates a bar plot with col3 categories", "Creates a histogram with col3", "Creates a pie chart with col3", "Creates a box plot with col3"], "answer": "Creates a scatter plot with color by col3" },
+    { "id": 80, "question": "How do you customize the style of a seaborn plot?", "options": ["sns.set_style('style')", "sns.style('style')", "sns.set_theme('style')", "sns.apply_style('style')", "sns.change_style('style')"], "answer": "sns.set_style('style')" },
+
+    // Basic Machine Learning with Python (20 Questions)
+    { "id": 81, "question": "Which library is commonly used for machine learning in Python?", "options": ["pandas", "numpy", "matplotlib", "seaborn", "sklearn"], "answer": "sklearn" },
+    { "id": 82, "question": "How do you split a dataset into training and testing sets in sklearn?", "options": ["train_test_split(X, y, test_size=0.2)", "split_data(X, y, test_size=0.2)", "divide_data(X, y, test_size=0.2)", "train_split(X, y, test_size=0.2)", "split(X, y, test_size=0.2)"], "answer": "train_test_split(X, y, test_size=0.2)" },
+    { "id": 83, "question": "What does the `fit()` method do in sklearn?", "options": ["Predicts new values", "Trains the model on the data", "Evaluates the model", "Splits the data", "Visualizes the data"], "answer": "Trains the model on the data" },
+    { "id": 84, "question": "Which sklearn class is used for linear regression?", "options": ["LinearRegression", "LogisticRegression", "DecisionTreeClassifier", "KMeans", "RandomForest"], "answer": "LinearRegression" },
+    { "id": 85, "question": "How do you predict values using a trained sklearn model?", "options": ["model.predict(X)", "model.fit(X)", "model.forecast(X)", "model.evaluate(X)", "model.score(X)"], "answer": "model.predict(X)" },
+    { "id": 86, "question": "What does `accuracy_score(y_true, y_pred)` return?", "options": ["The mean of predictions", "The accuracy of a classification model", "The variance of predictions", "The correlation of predictions", "The sum of predictions"], "answer": "The accuracy of a classification model" },
+    { "id": 87, "question": "Which sklearn class is used for classification tasks?", "options": ["LinearRegression", "LogisticRegression", "KMeans", "PCA", "StandardScaler"], "answer": "LogisticRegression" },
+    { "id": 88, "question": "How do you scale features using sklearn?", "options": ["StandardScaler().fit_transform(X)", "Scaler().transform(X)", "Normalize().fit(X)", "Standardize().apply(X)", "Scale().fit(X)"], "answer": "StandardScaler().fit_transform(X)" },
+    { "id": 89, "question": "What does `mean_squared_error(y_true, y_pred)` return?", "options": ["The accuracy of a model", "The mean squared error of predictions", "The correlation of predictions", "The variance of predictions", "The mean of predictions"], "answer": "The mean squared error of predictions" },
+    { "id": 90, "question": "What is the purpose of the `train_test_split` function?", "options": ["To merge datasets", "To split data into training and testing sets", "To clean data", "To visualize data", "To group data"], "answer": "To split data into training and testing sets" },
+    { "id": 91, "question": "Which algorithm is used for clustering in sklearn?", "options": ["LinearRegression", "LogisticRegression", "KMeans", "DecisionTreeClassifier", "RandomForestClassifier"], "answer": "KMeans" },
+    { "id": 92, "question": "How do you calculate the R-squared score for a regression model?", "options": ["model.score(X, y)", "model.r2_score(X, y)", "model.evaluate(X, y)", "model.fit_score(X, y)", "model.predict_score(X, y)"], "answer": "model.score(X, y)" },
+    { "id": 93, "question": "What does `KMeans(n_clusters=3)` do?", "options": ["Performs linear regression", "Clusters data into 3 groups", "Classifies data into 3 classes", "Scales data", "Splits data"], "answer": "Clusters data into 3 groups" },
+    { "id": 94, "question": "How do you encode categorical variables in pandas?", "options": ["pd.get_dummies(df['column'])", "df.encode('column')", "df.categorical('column')", "df.to_numeric('column')", "df.convert('column')"], "answer": "pd.get_dummies(df['column'])" },
+    { "id": 95, "question": "What does `cross_val_score(model, X, y, cv=5)` do?", "options": ["Splits data into 5 parts", "Performs 5-fold cross-validation", "Trains the model 5 times", "Predicts 5 times", "Scales data 5 times"], "answer": "Performs 5-fold cross-validation" },
+    { "id": 96, "question": "What is the purpose of `StandardScaler` in sklearn?", "options": ["To normalize numerical features", "To encode categorical variables", "To split data", "To create visualizations", "To train models"], "answer": "To normalize numerical features" },
+    { "id": 97, "question": "How do you calculate confusion matrix for a classification model?", "options": ["confusion_matrix(y_true, y_pred)", "metrics.confusion(y_true, y_pred)", "evaluate_confusion(y_true, y_pred)", "score_confusion(y_true, y_pred)", "matrix(y_true, y_pred)"], "answer": "confusion_matrix(y_true, y_pred)" },
+    { "id": 98, "question": "What does `DecisionTreeClassifier()` do?", "options": ["Performs regression", "Classifies data using a decision tree", "Clusters data", "Scales features", "Visualizes data"], "answer": "Classifies data using a decision tree" },
+    { "id": 99, "question": "How do you calculate the precision score for a classification model?", "options": ["precision_score(y_true, y_pred)", "score_precision(y_true, y_pred)", "metrics.precision(y_true, y_pred)", "evaluate_precision(y_true, y_pred)", "precision(y_true, y_pred)"], "answer": "precision_score(y_true, y_pred)" },
+    { "id": 100, "question": "What is the purpose of `LabelEncoder` in sklearn?", "options": ["To scale numerical data", "To encode categorical labels as integers", "To split data", "To create visualizations", "To train models"], "answer": "To encode categorical labels as integers" },
+
+    // Data Analysis with Titanic Dataset (20 Questions)
+    { "id": 101, "question": "What is the average `Age` of passengers in the Titanic dataset (rounded to two decimal places)?", "options": ["25.50", "29.70", "32.15", "35.20", "28.00"], "answer": "29.70" },
+    { "id": 102, "question": "How many passengers survived (Survived = 1) in the Titanic dataset?", "options": ["200", "342", "500", "600", "800"], "answer": "342" },
+    { "id": 103, "question": "What is the median `Fare` in the Titanic dataset?", "options": ["10.50", "14.45", "20.00", "25.75", "30.00"], "answer": "14.45" },
+    { "id": 104, "question": "How many passengers have a missing `Age` value?", "options": ["50", "100", "177", "200", "250"], "answer": "177" },
+    { "id": 105, "question": "What is the most frequent `Embarked` port?", "options": ["C (Cherbourg)", "Q (Queenstown)", "S (Southampton)", "Unknown", "None"], "answer": "S (Southampton)" },
+    { "id": 106, "question": "What is the standard deviation of `Fare` (rounded to two decimal places)?", "options": ["20.50", "35.75", "49.69", "60.25", "75.00"], "answer": "49.69" },
+    { "id": 107, "question": "How many passengers are in first class (Pclass = 1)?", "options": ["100", "216", "300", "400", "500"], "answer": "216" },
+    { "id": 108, "question": "What is the survival rate for female passengers?", "options": ["50%", "68%", "74%", "80%", "90%"], "answer": "74%" },
+    { "id": 109, "question": "In a histogram of `Age`, what is the shape of the distribution?", "options": ["Uniform", "Right-skewed", "Left-skewed", "Bimodal", "Symmetric"], "answer": "Right-skewed" },
+    { "id": 110, "question": "What is the correlation between `Age` and `Fare`?", "options": ["Strong positive", "Strong negative", "Weak or no correlation", "Perfect positive", "Perfect negative"], "answer": "Weak or no correlation" },
+    { "id": 111, "question": "How many unique values are in the `Pclass` column?", "options": ["1", "2", "3", "4", "5"], "answer": "3" },
+    { "id": 112, "question": "What is the maximum `Fare` paid by a surviving passenger?", "options": ["100.00", "200.00", "512.33", "600.00", "700.00"], "answer": "512.33" },
+    { "id": 113, "question": "In a bar plot of survival counts by `Sex`, which group has more survivors?", "options": ["Male", "Female", "Both equal", "None survived", "Unknown"], "answer": "Female" },
+    { "id": 114, "question": "What is the interquartile range (IQR) of the `Age` column?", "options": ["10.50", "14.00", "20.13", "25.00", "30.00"], "answer": "20.13" },
+    { "id": 115, "question": "How many passengers have a `Fare` greater than 100?", "options": ["20", "53", "100", "150", "200"], "answer": "53" },
+    { "id": 116, "question": "What is the mean `Age` for first-class passengers (Pclass = 1)?", "options": ["25.00", "38.23", "45.00", "50.00", "60.00"], "answer": "38.23" },
+    { "id": 117, "question": "What is the skewness of the `Fare` column?", "options": ["Negative", "Zero", "Positive", "Uniform", "Bimodal"], "answer": "Positive" },
+    { "id": 118, "question": "How many passengers embarked at Cherbourg (Embarked = 'C')?", "options": ["50", "100", "168", "200", "300"], "answer": "168" },
+    { "id": 119, "question": "What is the survival rate for passengers with `Age` < 18?", "options": ["40%", "50%", "55%", "60%", "70%"], "answer": "55%" },
+    { "id": 120, "question": "In a box plot of `Fare` by `Pclass`, which class has the highest median fare?", "options": ["1", "2", "3", "All equal", "None"], "answer": "1" },
+
+    // Data Analysis with Iris Dataset (20 Questions)
+    { "id": 121, "question": "How many rows are in the Iris dataset?", "options": ["50", "100", "150", "200", "250"], "answer": "150" },
+    { "id": 122, "question": "What is the average `SepalLengthCm` (rounded to two decimal places)?", "options": ["5.00", "5.84", "6.50", "7.00", "7.50"], "answer": "5.84" },
+    { "id": 123, "question": "How many unique species are in the Iris dataset?", "options": ["1", "2", "3", "4", "5"], "answer": "3" },
+    { "id": 124, "question": "What is the median `PetalLengthCm`?", "options": ["1.50", "4.35", "5.00", "6.00", "7.00"], "answer": "4.35" },
+    { "id": 125, "question": "What is the standard deviation of `SepalWidthCm` (rounded to two decimal places)?", "options": ["0.20", "0.44", "0.60", "0.80", "1.00"], "answer": "0.44" },
+    { "id": 126, "question": "Which species has the highest average `PetalLengthCm`?", "options": ["Iris-setosa", "Iris-versicolor", "Iris-virginica", "All equal", "None"], "answer": "Iris-virginica" },
+    { "id": 127, "question": "In a histogram of `SepalLengthCm`, what is the shape of the distribution?", "options": ["Uniform", "Right-skewed", "Left-skewed", "Bimodal", "Approximately normal"], "answer": "Approximately normal" },
+    { "id": 128, "question": "What is the correlation between `SepalLengthCm` and `PetalLengthCm`?", "options": ["Strong positive", "Strong negative", "Weak or no correlation", "Perfect positive", "Perfect negative"], "answer": "Strong positive" },
+    { "id": 129, "question": "How many Iris-setosa flowers are in the dataset?", "options": ["25", "50", "75", "100", "150"], "answer": "50" },
+    { "id": 130, "question": "What is the maximum `PetalWidthCm` in the Iris dataset?", "options": ["1.0", "1.5", "2.0", "2.5", "3.0"], "answer": "2.5" },
+    { "id": 131, "question": "In a box plot of `SepalLengthCm` by `Species`, which species has the highest median?", "options": ["Iris-setosa", "Iris-versicolor", "Iris-virginica", "All equal", "None"], "answer": "Iris-virginica" },
+    { "id": 132, "question": "What is the IQR of `PetalLengthCm`?", "options": ["1.0", "2.5", "3.5", "4.0", "5.0"], "answer": "3.5" },
+    { "id": 133, "question": "How many flowers have a `SepalLengthCm` greater than 6.0?", "options": ["20", "50", "61", "80", "100"], "answer": "61" },
+    { "id": 134, "question": "What is the skewness of `SepalWidthCm`?", "options": ["Negative", "Zero", "Positive", "Uniform", "Bimodal"], "answer": "Negative" },
+    { "id": 135, "question": "What is the accuracy of a logistic regression model predicting `Species` using all features (approximate, after train-test split)?", "options": ["50%", "70%", "95%", "100%", "0%"], "answer": "95%" },
+    { "id": 136, "question": "How many missing values are in the Iris dataset?", "options": ["0", "10", "20", "50", "100"], "answer": "0" },
+    { "id": 137, "question": "In a scatter plot of `SepalLengthCm` vs. `PetalLengthCm`, which species is most separable?", "options": ["Iris-setosa", "Iris-versicolor", "Iris-virginica", "All equally separable", "None separable"], "answer": "Iris-setosa" },
+    { "id": 138, "question": "What is the mean `PetalWidthCm` for Iris-virginica?", "options": ["1.0", "1.5", "2.0", "2.5", "3.0"], "answer": "2.0" },
+    { "id": 139, "question": "What is the variance of `SepalLengthCm` (rounded to two decimal places)?", "options": ["0.20", "0.68", "1.00", "1.50", "2.00"], "answer": "0.68" },
+    { "id": 140, "question": "What is the accuracy of a KMeans clustering model (k=3) on the Iris dataset (approximate, after scaling features)?", "options": ["50%", "70%", "85%", "95%", "100%"], "answer": "85%" }
+],
+      machine_learning: [
+    {
+        "id": 1,
+        "question": "What is machine learning?",
+        "options": ["A programming language", "A method for computers to learn from data", "A database management system", "A data visualization tool", "A hardware optimization technique"],
+        "answer": "A method for computers to learn from data"
+    },
+    {
+        "id": 2,
+        "question": "Which type of machine learning uses labeled data?",
+        "options": ["Unsupervised learning", "Supervised learning", "Reinforcement learning", "Semi-supervised learning", "Clustering"],
+        "answer": "Supervised learning"
+    },
+    {
+        "id": 3,
+        "question": "What is an example of a supervised learning task?",
+        "options": ["Clustering customers", "Predicting house prices", "Dimensionality reduction", "Anomaly detection", "Image generation"],
+        "answer": "Predicting house prices"
+    },
+    {
+        "id": 4,
+        "question": "What is the goal of unsupervised learning?",
+        "options": ["To predict labels", "To find patterns in unlabeled data", "To optimize rewards", "To classify data", "To reduce data size"],
+        "answer": "To find patterns in unlabeled data"
+    },
+    {
+        "id": 5,
+        "question": "Which algorithm is used for classification tasks?",
+        "options": ["LinearRegression", "LogisticRegression", "KMeans", "PCA", "StandardScaler"],
+        "answer": "LogisticRegression"
+    },
+    {
+        "id": 6,
+        "question": "What is a feature in machine learning?",
+        "options": ["A model parameter", "A column in the dataset", "A prediction output", "A loss function", "A training algorithm"],
+        "answer": "A column in the dataset"
+    },
+    {
+        "id": 7,
+        "question": "What is the purpose of a training set?",
+        "options": ["To evaluate the model", "To train the model", "To test the model", "To visualize data", "To clean data"],
+        "answer": "To train the model"
+    },
+    {
+        "id": 8,
+        "question": "What is overfitting in machine learning?",
+        "options": ["When a model performs poorly on training data", "When a model performs well on training data but poorly on test data", "When a model is too simple", "When a model has too few features", "When a model is not trained"],
+        "answer": "When a model performs well on training data but poorly on test data"
+    },
+    {
+        "id": 9,
+        "question": "What is the purpose of a test set?",
+        "options": ["To train the model", "To evaluate the model’s performance on unseen data", "To clean the data", "To select features", "To visualize predictions"],
+        "answer": "To evaluate the model’s performance on unseen data"
+    },
+    {
+        "id": 10,
+        "question": "Which metric is used to evaluate classification models?",
+        "options": ["Mean Squared Error", "R-squared", "Accuracy", "Variance", "Standard Deviation"],
+        "answer": "Accuracy"
+    },
+    {
+        "id": 11,
+        "question": "What is underfitting in machine learning?",
+        "options": ["When a model is too complex", "When a model is too simple and performs poorly on both training and test data", "When a model has too many features", "When a model is overtrained", "When a model is not evaluated"],
+        "answer": "When a model is too simple and performs poorly on both training and test data"
+    },
+    {
+        "id": 12,
+        "question": "What is the purpose of cross-validation?",
+        "options": ["To clean data", "To split data into training and testing sets", "To evaluate model performance using multiple data splits", "To visualize data", "To select features"],
+        "answer": "To evaluate model performance using multiple data splits"
+    },
+    {
+        "id": 13,
+        "question": "Which type of learning involves optimizing rewards?",
+        "options": ["Supervised learning", "Unsupervised learning", "Reinforcement learning", "Semi-supervised learning", "Clustering"],
+        "answer": "Reinforcement learning"
+    },
+    {
+        "id": 14,
+        "question": "What is a hyperparameter in machine learning?",
+        "options": ["A parameter learned during training", "A parameter set before training", "A feature in the dataset", "A prediction output", "A loss function"],
+        "answer": "A parameter set before training"
+    },
+    {
+        "id": 15,
+        "question": "Which algorithm is used for regression tasks?",
+        "options": ["LogisticRegression", "LinearRegression", "KMeans", "DecisionTreeClassifier", "PCA"],
+        "answer": "LinearRegression"
+    },
+    {
+        "id": 16,
+        "question": "What does a loss function measure?",
+        "options": ["The accuracy of predictions", "The error between predicted and actual values", "The number of features", "The size of the dataset", "The training time"],
+        "answer": "The error between predicted and actual values"
+    },
+    {
+        "id": 17,
+        "question": "What is the purpose of a validation set?",
+        "options": ["To train the model", "To tune hyperparameters", "To test the final model", "To clean data", "To visualize data"],
+        "answer": "To tune hyperparameters"
+    },
+    {
+        "id": 18,
+        "question": "Which of the following is an unsupervised learning algorithm?",
+        "options": ["LinearRegression", "LogisticRegression", "KMeans", "DecisionTreeClassifier", "RandomForestClassifier"],
+        "answer": "KMeans"
+    },
+    {
+        "id": 19,
+        "question": "What is the bias-variance tradeoff?",
+        "options": ["Balancing model complexity and generalization", "Balancing training and testing data", "Balancing feature selection and data cleaning", "Balancing accuracy and precision", "Balancing loss and gain"],
+        "answer": "Balancing model complexity and generalization"
+    },
+    {
+        "id": 20,
+        "question": "What is the purpose of feature selection?",
+        "options": ["To increase model complexity", "To reduce the number of features for better performance", "To split data", "To visualize data", "To train the model"],
+        "answer": "To reduce the number of features for better performance"
+    },
+    {
+        "id": 21,
+        "question": "Which Python library is commonly used for machine learning?",
+        "options": ["pandas", "numpy", "matplotlib", "seaborn", "sklearn"],
+        "answer": "sklearn"
+    },
+    {
+        "id": 22,
+        "question": "How do you split a dataset into training and testing sets in sklearn?",
+        "options": ["train_test_split(X, y, test_size=0.2)", "split_data(X, y, test_size=0.2)", "divide_data(X, y, test_size=0.2)", "train_split(X, y, test_size=0.2)", "split(X, y, test_size=0.2)"],
+        "answer": "train_test_split(X, y, test_size=0.2)"
+    },
+    {
+        "id": 23,
+        "question": "What does `StandardScaler().fit_transform(X)` do?",
+        "options": ["Encodes categorical variables", "Scales features to have mean 0 and variance 1", "Splits data into training and testing sets", "Trains a model", "Visualizes data"],
+        "answer": "Scales features to have mean 0 and variance 1"
+    },
+    {
+        "id": 24,
+        "question": "How do you encode categorical variables as dummy variables in pandas?",
+        "options": ["pd.get_dummies(df['column'])", "df.encode('column')", "df.categorical('column')", "df.to_numeric('column')", "df.convert('column')"],
+        "answer": "pd.get_dummies(df['column'])"
+    },
+    {
+        "id": 25,
+        "question": "What is the purpose of `LabelEncoder` in sklearn?",
+        "options": ["To scale numerical data", "To encode categorical labels as integers", "To split data", "To create visualizations", "To train models"],
+        "answer": "To encode categorical labels as integers"
+    },
+    {
+        "id": 26,
+        "question": "How do you handle missing values in a numerical column before training?",
+        "options": ["df['column'].fillna(df['column'].mean())", "df['column'].dropna()", "df['column'].replace_null(df['column'].mean())", "df['column'].set_null(df['column'].mean())", "df['column'].fill(df['column'].mean())"],
+        "answer": "df['column'].fillna(df['column'].mean())"
+    },
+    {
+        "id": 27,
+        "question": "What does `MinMaxScaler().fit_transform(X)` do?",
+        "options": ["Scales features to a range (e.g., 0 to 1)", "Encodes categorical variables", "Reduces dimensionality", "Trains a model", "Splits data"],
+        "answer": "Scales features to a range (e.g., 0 to 1)"
+    },
+    {
+        "id": 28,
+        "question": "Why is feature scaling important in machine learning?",
+        "options": ["To reduce training time", "To ensure features contribute equally to the model", "To encode categorical data", "To visualize data", "To split data"],
+        "answer": "To ensure features contribute equally to the model"
+    },
+    {
+        "id": 29,
+        "question": "How do you drop a column with missing values in pandas?",
+        "options": ["df.drop(columns=['column'])", "df.dropna(column='column')", "df.remove_column('column')", "df.delete('column')", "df.drop_null('column')"],
+        "answer": "df.drop(columns=['column'])"
+    },
+    {
+        "id": 30,
+        "question": "What does `pd.get_dummies(df['column'], drop_first=True)` do?",
+        "options": ["Creates dummy variables and keeps all categories", "Creates dummy variables and drops the first category", "Encodes the column as integers", "Drops the column", "Sorts the column"],
+        "answer": "Creates dummy variables and drops the first category"
+    },
+    {
+        "id": 31,
+        "question": "How do you check for missing values in a DataFrame?",
+        "options": ["df.isna().sum()", "df.missing().count()", "df.null_count()", "df.check_nulls()", "df.empty().sum()"],
+        "answer": "df.isna().sum()"
+    },
+    {
+        "id": 32,
+        "question": "What is the purpose of the `random_state` parameter in `train_test_split`?",
+        "options": ["To set the learning rate", "To ensure reproducibility of the split", "To scale features", "To encode labels", "To train the model"],
+        "answer": "To ensure reproducibility of the split"
+    },
+    {
+        "id": 33,
+        "question": "How do you select numerical columns in a DataFrame?",
+        "options": ["df.select_dtypes(include=['float64', 'int64'])", "df.get_numeric()", "df.select_numbers()", "df.filter_numeric()", "df.numeric_columns()"],
+        "answer": "df.select_dtypes(include=['float64', 'int64'])"
+    },
+    {
+        "id": 34,
+        "question": "What does `OneHotEncoder` in sklearn do?",
+        "options": ["Scales numerical data", "Encodes categorical variables as binary columns", "Reduces dimensionality", "Trains a model", "Splits data"],
+        "answer": "Encodes categorical variables as binary columns"
+    },
+    {
+        "id": 35,
+        "question": "How do you normalize a column in pandas?",
+        "options": ["(df['column'] - df['column'].min()) / (df['column'].max() - df['column'].min())", "df['column'].normalize()", "df['column'].scale()", "df['column'].standardize()", "df['column'].norm()"],
+        "answer": "(df['column'] - df['column'].min()) / (df['column'].max() - df['column'].min())"
+    },
+    {
+        "id": 36,
+        "question": "What is the purpose of `SimpleImputer` in sklearn?",
+        "options": ["To encode categorical data", "To impute missing values", "To scale features", "To train a model", "To visualize data"],
+        "answer": "To impute missing values"
+    },
+    {
+        "id": 37,
+        "question": "How do you replace missing values with the median in sklearn?",
+        "options": ["SimpleImputer(strategy='median').fit_transform(X)", "Imputer(strategy='median').transform(X)", "SimpleImputer(strategy='mean').fit_transform(X)", "FillNa(strategy='median').fit(X)", "Impute(strategy='median').fit(X)"],
+        "answer": "SimpleImputer(strategy='median').fit_transform(X)"
+    },
+    {
+        "id": 38,
+        "question": "What does `df.corr()` return in pandas?",
+        "options": ["A correlation matrix for numerical columns", "A summary of missing values", "A frequency table", "A sorted DataFrame", "A grouped DataFrame"],
+        "answer": "A correlation matrix for numerical columns"
+    },
+    {
+        "id": 39,
+        "question": "How do you select rows where a column is not null?",
+        "options": ["df[df['column'].notna()]", "df[df['column'].isna()]", "df[df['column'] != None]", "df[df['column'].not_null()]", "df[df['column'] == '']"],
+        "answer": "df[df['column'].notna()]"
+    },
+    {
+        "id": 40,
+        "question": "What is the purpose of feature engineering?",
+        "options": ["To create new features to improve model performance", "To reduce training time", "To visualize data", "To split data", "To evaluate models"],
+        "answer": "To create new features to improve model performance"
+    },
+    {
+        "id": 41,
+        "question": "What does the `fit()` method do in sklearn?",
+        "options": ["Predicts new values", "Trains the model on the data", "Evaluates the model", "Splits the data", "Visualizes the data"],
+        "answer": "Trains the model on the data"
+    },
+    {
+        "id": 42,
+        "question": "How do you predict values using a trained sklearn model?",
+        "options": ["model.predict(X)", "model.fit(X)", "model.forecast(X)", "model.evaluate(X)", "model.score(X)"],
+        "answer": "model.predict(X)"
+    },
+    {
+        "id": 43,
+        "question": "What does `accuracy_score(y_true, y_pred)` return?",
+        "options": ["The mean of predictions", "The accuracy of a classification model", "The variance of predictions", "The correlation of predictions", "The sum of predictions"],
+        "answer": "The accuracy of a classification model"
+    },
+    {
+        "id": 44,
+        "question": "What is the purpose of `mean_squared_error` in sklearn?",
+        "options": ["To evaluate classification models", "To evaluate regression models", "To scale features", "To encode labels", "To split data"],
+        "answer": "To evaluate regression models"
+    },
+    {
+        "id": 45,
+        "question": "How do you calculate the R-squared score for a regression model?",
+        "options": ["model.score(X, y)", "model.r2_score(X, y)", "model.evaluate(X, y)", "model.fit_score(X, y)", "model.predict_score(X, y)"],
+        "answer": "model.score(X, y)"
+    },
+    {
+        "id": 46,
+        "question": "What does `confusion_matrix(y_true, y_pred)` return?",
+        "options": ["A matrix of true vs. predicted labels", "The accuracy of the model", "The mean squared error", "The correlation matrix", "The variance of predictions"],
+        "answer": "A matrix of true vs. predicted labels"
+    },
+    {
+        "id": 47,
+        "question": "What is the purpose of `cross_val_score` in sklearn?",
+        "options": ["To split data", "To perform cross-validation", "To scale features", "To encode labels", "To visualize predictions"],
+        "answer": "To perform cross-validation"
+    },
+    {
+        "id": 48,
+        "question": "How do you calculate precision for a classification model?",
+        "options": ["precision_score(y_true, y_pred)", "score_precision(y_true, y_pred)", "metrics.precision(y_true, y_pred)", "evaluate_precision(y_true, y_pred)", "precision(y_true, y_pred)"],
+        "answer": "precision_score(y_true, y_pred)"
+    },
+    {
+        "id": 49,
+        "question": "What does `recall_score(y_true, y_pred)` measure?",
+        "options": ["The proportion of true positives correctly identified", "The proportion of predicted positives that are correct", "The accuracy of the model", "The mean squared error", "The correlation of predictions"],
+        "answer": "The proportion of true positives correctly identified"
+    },
+    {
+        "id": 50,
+        "question": "What is the F1 score?",
+        "options": ["The mean of precision and recall", "The harmonic mean of precision and recall", "The accuracy of the model", "The mean squared error", "The variance of predictions"],
+        "answer": "The harmonic mean of precision and recall"
+    },
+    {
+        "id": 51,
+        "question": "How do you perform k-fold cross-validation in sklearn?",
+        "options": ["cross_val_score(model, X, y, cv=5)", "kfold_score(model, X, y, cv=5)", "cross_validate(model, X, y, cv=5)", "validate_model(model, X, y, cv=5)", "score_kfold(model, X, y, cv=5)"],
+        "answer": "cross_val_score(model, X, y, cv=5)"
+    },
+    {
+        "id": 52,
+        "question": "What does `model.score(X, y)` return for a classification model?",
+        "options": ["Mean squared error", "Accuracy", "Precision", "Recall", "F1 score"],
+        "answer": "Accuracy"
+    },
+    {
+        "id": 53,
+        "question": "What is the purpose of a decision tree in machine learning?",
+        "options": ["To perform regression only", "To make decisions based on feature splits", "To cluster data", "To scale features", "To visualize data"],
+        "answer": "To make decisions based on feature splits"
+    },
+    {
+        "id": 54,
+        "question": "How do you train a logistic regression model in sklearn?",
+        "options": ["model = LogisticRegression(); model.fit(X, y)", "model = LogisticRegression(); model.train(X, y)", "model = LogisticRegression(); model.predict(X, y)", "model = LogisticRegression(); model.evaluate(X, y)", "model = LogisticRegression(); model.score(X, y)"],
+        "answer": "model = LogisticRegression(); model.fit(X, y)"
+    },
+    {
+        "id": 55,
+        "question": "What does `classification_report(y_true, y_pred)` provide?",
+        "options": ["A summary of precision, recall, and F1 score", "A correlation matrix", "A confusion matrix", "A mean squared error", "A cross-validation score"],
+        "answer": "A summary of precision, recall, and F1 score"
+    },
+    {
+        "id": 56,
+        "question": "What is the purpose of the `random_state` parameter in sklearn models?",
+        "options": ["To set the learning rate", "To ensure reproducibility", "To scale features", "To encode labels", "To split data"],
+        "answer": "To ensure reproducibility"
+    },
+    {
+        "id": 57,
+        "question": "How do you calculate the mean absolute error for a regression model?",
+        "options": ["mean_absolute_error(y_true, y_pred)", "absolute_error(y_true, y_pred)", "mean_error(y_true, y_pred)", "error_absolute(y_true, y_pred)", "metrics.absolute(y_true, y_pred)"],
+        "answer": "mean_absolute_error(y_true, y_pred)"
+    },
+    {
+        "id": 58,
+        "question": "What does `GridSearchCV` do in sklearn?",
+        "options": ["Splits data into training and testing sets", "Performs hyperparameter tuning using cross-validation", "Trains a model", "Visualizes predictions", "Scales features"],
+        "answer": "Performs hyperparameter tuning using cross-validation"
+    },
+    {
+        "id": 59,
+        "question": "What is the purpose of a random forest model?",
+        "options": ["To perform linear regression", "To combine multiple decision trees for better predictions", "To cluster data", "To scale features", "To reduce dimensionality"],
+        "answer": "To combine multiple decision trees for better predictions"
+    },
+    {
+        "id": 60,
+        "question": "How do you evaluate a regression model’s performance?",
+        "options": ["Using accuracy", "Using mean squared error", "Using precision", "Using recall", "Using F1 score"],
+        "answer": "Using mean squared error"
+    },
+    {
+        "id": 61,
+        "question": "How many passengers are in the Titanic dataset?",
+        "options": ["500", "891", "1000", "1500", "2000"],
+        "answer": "891"
+    },
+    {
+        "id": 62,
+        "question": "What is the accuracy of a logistic regression model predicting `Survived` using `Pclass`, `Sex`, and `Age` (approximate, after handling missing values and encoding `Sex`)?",
+        "options": ["50%", "70%", "80%", "90%", "100%"],
+        "answer": "80%"
+    },
+    {
+        "id": 63,
+        "question": "How many missing values are in the `Age` column?",
+        "options": ["50", "100", "177", "200", "250"],
+        "answer": "177"
+    },
+    {
+        "id": 64,
+        "question": "What is the most frequent value in the `Pclass` column?",
+        "options": ["1", "2", "3", "4", "None"],
+        "answer": "3"
+    },
+    {
+        "id": 65,
+        "question": "How do you encode the `Sex` column for machine learning?",
+        "options": ["pd.get_dummies(df['Sex'])", "LabelEncoder().fit_transform(df['Sex'])", "df['Sex'].map({'male': 0, 'female': 1})", "Both b and c", "df['Sex'].encode()"],
+        "answer": "Both b and c"
+    },
+    {
+        "id": 66,
+        "question": "What is the survival rate for first-class passengers (Pclass = 1)?",
+        "options": ["50%", "63%", "75%", "85%", "95%"],
+        "answer": "63%"
+    },
+    {
+        "id": 67,
+        "question": "What is the correlation between `Fare` and `Survived`?",
+        "options": ["Strong positive", "Strong negative", "Weak positive", "Weak negative", "No correlation"],
+        "answer": "Weak positive"
+    },
+    {
+        "id": 68,
+        "question": "How many passengers embarked at Southampton (Embarked = 'S')?",
+        "options": ["200", "400", "644", "800", "1000"],
+        "answer": "644"
+    },
+    {
+        "id": 69,
+        "question": "What is the accuracy of a decision tree classifier predicting `Survived` using `Pclass`, `Sex`, and `Age` (approximate)?",
+        "options": ["50%", "70%", "78%", "90%", "100%"],
+        "answer": "78%"
+    },
+    {
+        "id": 70,
+        "question": "How do you impute missing `Age` values with the median?",
+        "options": ["df['Age'].fillna(df['Age'].median(), inplace=True)", "df['Age'].fill(df['Age'].median())", "df['Age'].replace_null(df['Age'].median())", "df['Age'].set_null(df['Age'].median())", "df['Age'].impute(df['Age'].median())"],
+        "answer": "df['Age'].fillna(df['Age'].median(), inplace=True)"
+    },
+    {
+        "id": 71,
+        "question": "What is the precision of a logistic regression model predicting `Survived` (approximate)?",
+        "options": ["50%", "70%", "80%", "90%", "100%"],
+        "answer": "80%"
+    },
+    {
+        "id": 72,
+        "question": "How many features are created after one-hot encoding the `Embarked` column?",
+        "options": ["1", "2", "3", "4", "5"],
+        "answer": "3"
+    },
+    {
+        "id": 73,
+        "question": "What is the recall for a decision tree classifier predicting `Survived` (approximate)?",
+        "options": ["50%", "70%", "75%", "85%", "95%"],
+        "answer": "75%"
+    },
+    {
+        "id": 74,
+        "question": "What is the F1 score for a logistic regression model predicting `Survived` (approximate)?",
+        "options": ["50%", "70%", "78%", "90%", "100%"],
+        "answer": "78%"
+    },
+    {
+        "id": 75,
+        "question": "How many passengers have a `Fare` greater than 100?",
+        "options": ["20", "53", "100", "150", "200"],
+        "answer": "53"
+    },
+    {
+        "id": 76,
+        "question": "What is the accuracy of a random forest classifier predicting `Survived` using `Pclass`, `Sex`, and `Age` (approximate)?",
+        "options": ["50%", "70%", "80%", "90%", "100%"],
+        "answer": "80%"
+    },
+    {
+        "id": 77,
+        "question": "What is the mean `Age` for surviving passengers?",
+        "options": ["25.00", "28.34", "30.00", "35.00", "40.00"],
+        "answer": "28.34"
+    },
+    {
+        "id": 78,
+        "question": "How do you scale the `Age` and `Fare` columns using StandardScaler?",
+        "options": ["StandardScaler().fit_transform(df[['Age', 'Fare']])", "Scaler().transform(df[['Age', 'Fare']])", "Standardize().fit(df[['Age', 'Fare']])", "Scale().apply(df[['Age', 'Fare']])", "Normalize().fit(df[['Age', 'Fare']])"],
+        "answer": "StandardScaler().fit_transform(df[['Age', 'Fare']])"
+    },
+    {
+        "id": 79,
+        "question": "What is the shape of the confusion matrix for predicting `Survived`?",
+        "options": ["2x2", "3x3", "4x4", "1x2", "2x3"],
+        "answer": "2x2"
+    },
+    {
+        "id": 80,
+        "question": "What is the cross-validation score for a logistic regression model predicting `Survived` (approximate)?",
+        "options": ["50%", "70%", "80%", "90%", "100%"],
+        "answer": "80%"
+    },
+    {
+        "id": 81,
+        "question": "How many rows are in the Iris dataset?",
+        "options": ["50", "100", "150", "200", "250"],
+        "answer": "150"
+    },
+    {
+        "id": 82,
+        "question": "How many unique species are in the Iris dataset?",
+        "options": ["1", "2", "3", "4", "5"],
+        "answer": "3"
+    },
+    {
+        "id": 83,
+        "question": "What is the accuracy of a logistic regression model predicting `Species` using all features (approximate, after train-test split)?",
+        "options": ["50%", "70%", "95%", "100%", "0%"],
+        "answer": "95%"
+    },
+    {
+        "id": 84,
+        "question": "How many missing values are in the Iris dataset?",
+        "options": ["0", "10", "20", "50", "100"],
+        "answer": "0"
+    },
+    {
+        "id": 85,
+        "question": "What is the mean `SepalLengthCm` (rounded to two decimal places)?",
+        "options": ["5.00", "5.84", "6.50", "7.00", "7.50"],
+        "answer": "5.84"
+    },
+    {
+        "id": 86,
+        "question": "What is the accuracy of a decision tree classifier predicting `Species` (approximate)?",
+        "options": ["50%", "70%", "95%", "100%", "0%"],
+        "answer": "95%"
+    },
+    {
+        "id": 87,
+        "question": "How do you encode the `Species` column for classification?",
+        "options": ["LabelEncoder().fit_transform(df['Species'])", "pd.get_dummies(df['Species'])", "df['Species'].map({'setosa': 0, 'versicolor': 1, 'virginica': 2})", "Both a and c", "df['Species'].encode()"],
+        "answer": "Both a and c"
+    },
+    {
+        "id": 88,
+        "question": "What is the standard deviation of `PetalLengthCm` (rounded to two decimal places)?",
+        "options": ["0.50", "1.00", "1.77", "2.00", "2.50"],
+        "answer": "1.77"
+    },
+    {
+        "id": 89,
+        "question": "What is the precision for predicting `Iris-setosa` with a logistic regression model (approximate)?",
+        "options": ["50%", "70%", "90%", "100%", "0%"],
+        "answer": "100%"
+    },
+    {
+        "id": 90,
+        "question": "How many flowers are Iris-setosa?",
+        "options": ["25", "50", "75", "100", "150"],
+        "answer": "50"
+    },
+    {
+        "id": 91,
+        "question": "What is the accuracy of a KMeans clustering model (k=3) on the Iris dataset (approximate, after scaling)?",
+        "options": ["50%", "70%", "85%", "95%", "100%"],
+        "answer": "85%"
+    },
+    {
+        "id": 92,
+        "question": "What is the median `PetalWidthCm`?",
+        "options": ["0.50", "1.30", "1.50", "2.00", "2.50"],
+        "answer": "1.30"
+    },
+    {
+        "id": 93,
+        "question": "What is the correlation between `SepalLengthCm` and `PetalLengthCm`?",
+        "options": ["Strong positive", "Strong negative", "Weak or no correlation", "Perfect positive", "Perfect negative"],
+        "answer": "Strong positive"
+    },
+    {
+        "id": 94,
+        "question": "What is the F1 score for a decision tree classifier predicting `Species` (approximate)?",
+        "options": ["50%", "70%", "95%", "100%", "0%"],
+        "answer": "95%"
+    },
+    {
+        "id": 95,
+        "question": "How many flowers have a `SepalLengthCm` greater than 6.0?",
+        "options": ["20", "50", "61", "80", "100"],
+        "answer": "61"
+    },
+    {
+        "id": 96,
+        "question": "What is the cross-validation score for a logistic regression model predicting `Species` (approximate)?",
+        "options": ["50%", "70%", "95%", "100%", "0%"],
+        "answer": "95%"
+    },
+    {
+        "id": 97,
+        "question": "What is the mean `PetalLengthCm` for Iris-virginica?",
+        "options": ["3.0", "4.0", "5.55", "6.0", "7.0"],
+        "answer": "5.55"
+    },
+    {
+        "id": 98,
+        "question": "What is the shape of the confusion matrix for predicting `Species`?",
+        "options": ["2x2", "3x3", "4x4", "1x3", "3x2"],
+        "answer": "3x3"
+    },
+    {
+        "id": 99,
+        "question": "What is the accuracy of a random forest classifier predicting `Species` (approximate)?",
+        "options": ["50%", "70%", "95%", "100%", "0%"],
+        "answer": "95%"
+    },
+    {
+        "id": 100,
+        "question": "Which feature has the highest correlation with `PetalLengthCm`?",
+        "options": ["SepalLengthCm", "SepalWidthCm", "PetalWidthCm", "Id", "None"],
+        "answer": "PetalWidthCm"
+    }
+]
+        };
+
+        // Quiz state
+        const quiz = {
+            questions: [],
+            currentIndex: 0,
+            answers: {},
+            timer: null,
+            timeLeft: 0,
+            startTime: 0
+        };
+
+        // DOM elements
+        const el = {
+            setup: document.getElementById('quizSetup'),
+            container: document.getElementById('quizContainer'),
+            results: document.getElementById('results'),
+            questions: document.getElementById('questions'),
+            counter: document.getElementById('questionCounter'),
+            timerDisplay: document.getElementById('timeDisplay'),
+            startBtn: document.getElementById('startQuiz'),
+            homeBtn: document.getElementById('homeButton'),
+            homeBtn2: document.getElementById('homeButton2'),
+            endBtn: document.getElementById('endButton'),
+            prevBtn: document.getElementById('prevQuestion'),
+            nextBtn: document.getElementById('nextQuestion'),
+            score: document.getElementById('score'),
+            feedback: document.getElementById('feedback'),
+            timeTaken: document.getElementById('timeTaken'),
+            answers: document.getElementById('answers')
+        };
+
+        // Initialize the quiz
+        function init() {
+            // Event listeners
+            el.startBtn.addEventListener('click', startQuiz);
+            el.homeBtn.addEventListener('click', showSetup);
+            el.homeBtn2.addEventListener('click', showSetup);
+            el.endBtn.addEventListener('click', endQuiz);
+            el.prevBtn.addEventListener('click', prevQuestion);
+            el.nextBtn.addEventListener('click', nextQuestion);
+            
+            // Hide back button initially
+            el.prevBtn.hidden = true;
+        }
+
+        // Show setup screen
+        function showSetup() {
+            clearInterval(quiz.timer);
+            el.setup.hidden = false;
+            el.container.hidden = true;
+            el.results.hidden = true;
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            // Get selected question sets
+            const selectedSets = Array.from(document.getElementById('questionSets').selectedOptions)
+                .map(opt => opt.value);
+            
+            // Validate inputs
+            if (selectedSets.length === 0) {
+                alert('Please select at least one question set');
+                return;
+            }
+            
+            const numQuestions = parseInt(document.getElementById('numQuestions').value);
+            if (isNaN(numQuestions) || numQuestions < 10 || numQuestions > 150) {
+                alert('Please enter a valid number of questions (10-150)');
+                return;
+            }
+            
+            const minutes = parseInt(document.getElementById('timerMinutes').value);
+            if (isNaN(minutes) || minutes < 5 || minutes > 120) {
+                alert('Please enter a valid timer value (5-120 minutes)');
+                return;
+            }
+            
+            // Prepare questions
+            quiz.questions = [];
+            selectedSets.forEach(set => {
+                if (questionsData[set]) {
+                    quiz.questions.push(...questionsData[set]);
+                }
+            });
+            
+            // Shuffle and limit questions
+            quiz.questions = shuffle(quiz.questions).slice(0, numQuestions);
+            quiz.currentIndex = 0;
+            quiz.answers = {};
+            quiz.timeLeft = minutes * 60;
+            quiz.startTime = Date.now();
+            
+            // Start timer
+            updateTimerDisplay();
+            quiz.timer = setInterval(updateTimer, 1000);
+            
+            // Show first question
+            showQuestion();
+            
+            // Switch to quiz view
+            el.setup.hidden = true;
+            el.container.hidden = false;
+            el.results.hidden = true;
+        }
+
+        // Shuffle array
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = quiz.questions[quiz.currentIndex];
+            
+            el.questions.innerHTML = `
+                <div class="mb-6">
+                    <p class="font-medium text-lg text-blue-900 mb-4">${quiz.currentIndex + 1}. ${question.question}</p>
+                    <div class="space-y-3">
+                        ${question.options.map(option => `
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="question" value="${option}" 
+                                    ${quiz.answers[quiz.currentIndex] === option ? 'checked' : ''}
+                                    class="h-5 w-5 text-purple-600 focus:ring-purple-600">
+                                <span class="ml-3 text-gray-700">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Update counter
+            el.counter.textContent = `Question ${quiz.currentIndex + 1} of ${quiz.questions.length}`;
+            
+            // Update nav buttons
+            el.prevBtn.hidden = quiz.currentIndex === 0;
+            el.nextBtn.hidden = quiz.currentIndex === quiz.questions.length - 1;
+        }
+
+        // Save current answer
+        function saveAnswer() {
+            const selected = document.querySelector('input[name="question"]:checked');
+            if (selected) {
+                quiz.answers[quiz.currentIndex] = selected.value;
+            }
+        }
+
+        // Next question
+        function nextQuestion() {
+            saveAnswer();
+            if (quiz.currentIndex < quiz.questions.length - 1) {
+                quiz.currentIndex++;
+                showQuestion();
+            }
+        }
+
+        // Previous question
+        function prevQuestion() {
+            saveAnswer();
+            if (quiz.currentIndex > 0) {
+                quiz.currentIndex--;
+                showQuestion();
+            }
+        }
+
+        // Update timer
+        function updateTimer() {
+            quiz.timeLeft--;
+            updateTimerDisplay();
+            
+            if (quiz.timeLeft <= 0) {
+                endQuiz();
+            }
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            const mins = Math.floor(quiz.timeLeft / 60);
+            const secs = quiz.timeLeft % 60;
+            el.timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Get feedback based on score percentage
+        function getFeedback(percentage) {
+            if (percentage < 10) return "Are you sure you want to do this? 😅";
+            if (percentage < 20) return "Hmmm, you need to work harder! 📚";
+            if (percentage < 30) return "Baby steps! Keep practicing! 👶";
+            if (percentage < 40) return "You're getting there! 💪";
+            if (percentage < 50) return "Halfway to greatness! 🚀";
+            if (percentage < 60) return "Not bad! Keep pushing! 👍";
+            if (percentage < 70) return "Good job! You're improving! 😊";
+            if (percentage < 80) return "Great work! Almost there! 🎯";
+            if (percentage < 90) return "Excellent! You know your stuff! 🌟";
+            if (percentage < 100) return "Almost perfect! Amazing! 🤩";
+            return "Perfect score! Data science champion! 🏆";
+        }
+
+        // End quiz
+        function endQuiz() {
+            clearInterval(quiz.timer);
+            saveAnswer();
+            showResults();
+        }
+
+        // Show results
+        function showResults() {
+            // Calculate score
+            let correct = 0;
+            quiz.questions.forEach((q, index) => {
+                if (quiz.answers[index] === q.answer) {
+                    correct++;
+                }
+            });
+            
+            const percentage = (correct / quiz.questions.length) * 100;
+            const timeTaken = Math.floor((Date.now() - quiz.startTime) / 1000);
+            
+            // Display score
+            el.score.textContent = `You scored ${correct}/${quiz.questions.length} (${percentage.toFixed(1)}%)`;
+            
+            // Display feedback
+            el.feedback.textContent = getFeedback(percentage);
+            
+            // Set feedback color based on performance
+            if (percentage < 50) {
+                el.feedback.className = "text-xl text-center font-bold mt-2 text-red-600";
+            } else if (percentage < 80) {
+                el.feedback.className = "text-xl text-center font-bold mt-2 text-yellow-600";
+            } else {
+                el.feedback.className = "text-xl text-center font-bold mt-2 text-green-600";
+            }
+            
+            // Display time taken
+            el.timeTaken.textContent = `Time taken: ${formatTime(timeTaken)}`;
+            
+            // Show answers
+            el.answers.innerHTML = '';
+            quiz.questions.forEach((q, index) => {
+                const userAnswer = quiz.answers[index] || 'Not answered';
+                const isCorrect = userAnswer === q.answer;
+                
+                const answerEl = document.createElement('div');
+                answerEl.className = `mb-4 p-4 border rounded-lg ${isCorrect ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}`;
+                answerEl.innerHTML = `
+                    <p class="font-medium">${index + 1}. ${q.question}</p>
+                    <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div class="p-2 ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} rounded">
+                            <p class="text-sm font-medium">Your answer:</p>
+                            <p>${userAnswer}</p>
+                        </div>
+                        <div class="p-2 bg-green-100 text-green-800 rounded">
+                            <p class="text-sm font-medium">Correct answer:</p>
+                            <p>${q.answer}</p>
+                        </div>
+                    </div>
+                `;
+                el.answers.appendChild(answerEl);
+            });
+            
+            // Show results screen
+            el.setup.hidden = true;
+            el.container.hidden = true;
+            el.results.hidden = false;
+        }
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+    <footer class="bg-blue-900 text-white py-4 mt-10">
+  <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+    <p class="text-sm mb-2 md:mb-0">Created by Ikenna Theodore Ugwu</p>
+    <div class="flex space-x-4">
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/ikenna-ugwu-716b9b18b/" target="_blank" aria-label="LinkedIn">
+        <svg class="w-6 h-6 text-white hover:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.2c-1 0-1.7-.7-1.7-1.7 0-1 .7-1.8 1.7-1.8s1.7.8 1.7 1.8c0 1-.7 1.7-1.7 1.7zm13.5 11.2h-3v-5.5c0-1.3-.5-2.2-1.6-2.2-.9 0-1.3.6-1.5 1.1-.1.2-.1.5-.1.8v5.8h-3s.1-9.4 0-10.3h3v1.5c.4-.6 1.1-1.4 2.8-1.4 2 0 3.4 1.3 3.4 4.1v6.1z"/>
+        </svg>
+      </a>
+      <!-- Portfolio -->
+      <a href="https://ikay47.github.io/Theodata.github.io/" target="_blank" aria-label="Portfolio">
+        <svg class="w-6 h-6 text-white hover:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.1 11.3.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.6-4-1.6-.6-1.4-1.5-1.8-1.5-1.8-1.2-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 2.8 1.5 3.5 1.1.1-.8.4-1.5.7-1.8-2.7-.3-5.6-1.3-5.6-5.9 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.6.1-3.4 0 0 1-.3 3.3 1.2.9-.3 1.9-.5 2.9-.5s2 .2 2.9.5c2.3-1.5 3.3-1.2 3.3-1.2.6 1.8.2 3.1.1 3.4.8.9 1.2 1.9 1.2 3.2 0 4.6-2.9 5.6-5.6 5.9.4.3.7.9.7 1.9v2.9c0 .3.2.7.8.6 4.7-1.5 8.1-6 8.1-11.3 0-6.6-5.4-12-12-12z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
